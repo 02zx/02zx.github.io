@@ -1,7 +1,9 @@
 import numpy as np
 
 class reduced_unit:
+    #Usage: reduced_unit(300, 360, 2.71**3).cal_T() 
     def __init__(self,T,N,V,epsilon=78.20*8.314/1000, sigma=0.31656):
+        #The default parameters are for SPC/E water model.
         self.T=T
         self.N=N
         self.V=V
@@ -20,7 +22,7 @@ class reduced_unit:
     
 
 def MBWR(T,rho):
-
+    #T and rho are in reduced units.
 
     #Johnson J K, Zollweg J A and Gubbins K E 1993 Mol.Phys. 78 591
     #See Tab.3 for validation

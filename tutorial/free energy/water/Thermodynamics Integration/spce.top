@@ -1,1 +1,11 @@
+Include forcefield parameters
+#include "amber99sb.ff/forcefield.itp"
+#include "amber99sb.ff/spce.itp"
 
+[ system ]
+; Name
+ICE in water
+
+[ molecules ]
+; Compound        #mols
+SOL 	360

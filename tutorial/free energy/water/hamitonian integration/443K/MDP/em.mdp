@@ -1,0 +1,39 @@
+; Run control
+integrator               = steep 
+nsteps                   = 5000
+; EM criteria and other stuff
+emtol                    = 100
+emstep                   = 0.01
+niter                    = 20
+nbfgscorr                = 10
+; Output control
+nstlog                   = 1
+nstenergy                = 1
+; Neighborsearching and short-range nonbonded interactions
+cutoff-scheme            = verlet
+nstlist                  = 1
+ns_type                  = grid
+pbc                      = xyz
+rlist                    = 0.85
+; Electrostatics
+coulombtype              = PME
+rcoulomb                 = 0.85
+; van der Waals
+vdwtype                  = cutoff
+rvdw                     = 0.85
+; Apply long range dispersion corrections for Energy and Pressure
+DispCorr                  = EnerPres
+; Temperature and pressure coupling are off during EM
+tcoupl                   = no
+pcoupl                   = no
+; No velocities during EM 
+gen_vel                  = no 
+; options for bonds
+constraints              = h-bonds  ; we only have C-H bonds here
+; Type of constraint algorithm
+constraint-algorithm     = lincs
+; Do not constrain the starting configuration
+continuation             = no
+; Highest order in the expansion of the constraint coupling matrix
+lincs-order              = 12
+

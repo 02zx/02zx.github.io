@@ -1,0 +1,15 @@
+Include forcefield parameters
+#include "amber99sb.ff/forcefield.itp"
+[ atomtypes ]
+OW_spc       8      15.9994  -0.8476  A   3.16557e-01  6.50629e-01
+HW_spc       1       1.0080  0.4238  A   0.00000e+00  0.00000e+00
+
+#include "spce.itp"
+
+[ system ]
+; Name
+ICE in water
+
+[ molecules ]
+; Compound        #mols
+SOL 	360

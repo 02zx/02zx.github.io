@@ -1,0 +1,4 @@
+1. sh gen.sh
+2. sh rerun.sh
+3. set T, N in deltaA.py
+4. python3 deltaA.py

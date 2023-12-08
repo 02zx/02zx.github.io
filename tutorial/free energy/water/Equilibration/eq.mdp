@@ -1,1 +1,51 @@
+;define             = -DFLEXIBLE
+cpp                 =  /usr/bin/cpp
+constraints         =  hbonds
+constraint_algorithm =  LINCS
+integrator          =  md
+dt                  =  0.002   ; ps !
+nsteps = 500000
+nstxout             =  0
+nstvout             =  0
+nstfout             =  0
+nstlog              =  10000
+nstenergy           =  500
+nstxtcout           =  5000
+nstlist             =  10
+cutoff-scheme       =  verlet
+ns_type             =  grid
+coulombtype         =  PME
+rlist               =  0.85
+rcoulomb            =  0.85
+rvdw                =  0.85
+pbc                 = xyz
+optimize_fft        = yes
+nstcomm             = 100
+comm-grps           = System
 
+tcoupl              =  v-rescale
+tc-grps             =  system
+tau_t               =  0.1  
+ref_t=443
+
+; Annealing
+;annealing 	    = single 
+annealing-npoints   = 3
+annealing-time	    = 0 5000 9000
+annealing-temp      = 245 245 248.0
+
+energygrps          =  system 
+Pcoupl              =  c-rescale;Parrinello-Rahman;
+Pcoupltype          =  isotropic
+tau_p               =  1       
+compressibility     =  4.5e-5 
+ref_p               =  4010   
+
+;gen_vel             = yes
+gen_temp            =
+gen_seed            =  -1
+
+;continuation = yes
+
+;freezegrps          = MOL
+;freezedim           = Y Y Y 

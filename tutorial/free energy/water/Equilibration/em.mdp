@@ -1,0 +1,23 @@
+;define = -DFLEXIBLE
+integrator = steep
+nsteps = 10000
+emtol  = 100.0
+emstep = 0.01
+;
+nstxout   = 100
+nstlog    = 50
+nstenergy = 50
+;
+pbc = xyz
+cutoff-scheme            = Verlet
+coulombtype              = PME
+rcoulomb                 = 0.85
+vdwtype                  = Cut-off
+rvdw                     = 0.85
+rlist			 = 0.85
+;
+constraints              = hbonds
+;freezegrps          = MOL
+;freezedim           = Y Y Y 
+;
+

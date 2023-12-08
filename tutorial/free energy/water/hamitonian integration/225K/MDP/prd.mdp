@@ -6,7 +6,7 @@ integrator               = md
 ; Start time and timestep in ps
 tinit                    = 0
 dt                       = 0.002
-nsteps                   = 500000
+nsteps                   = 1000000
 ; For exact run continuation or redoing part of a run
 init_step                = 0
 ; mode for center of mass motion removal
@@ -22,11 +22,11 @@ nstxout                  = 0
 nstvout                  = 0
 nstfout                  = 0
 ; Output frequency for energies to log file and energy file
-nstlog                   = 10000 
-nstenergy                = 10000
+nstlog                   = 5000 
+nstenergy                = 500
 ; Output frequency and precision for xtc file
-nstxtcout                = 0
-xtc-precision            = 1000
+nstxtcout                = 500
+xtc-precision            = 10000
 
 ; NEIGHBORSEARCHING PARAMETERS
 ; nblist update frequency
@@ -56,13 +56,13 @@ DispCorr                 = EnerPres
 ; Temperature coupling  
 Tcoupl                   = v-rescale
 tau_t                    = 0.1
-ref_t                    = 225.
+ref_t                    = 225
 tc-grps                  = system
 
 Pcoupl                   =  no 
 
 ; GENERATE VELOCITIES FOR STARTUP RUN
- gen_vel                  = 
+; gen_vel                  = yes
  gen_temp                 = 200.00
  gen_seed                 = 50934891
 

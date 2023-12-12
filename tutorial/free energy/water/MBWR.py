@@ -147,5 +147,7 @@ def MBWR(T,rho):
     Gr_ = Ar_ + P_/rho - T
 
     return Ar_, P_, Ur_, Gr_
-    
+
+print('A_res, P_reduced, U_res, G_res:',
+      MBWR(reduced_unit(300, 360, 2.71**3).cal_T(),reduced_unit(300, 360, 2.71**3).cal_rho()))
     

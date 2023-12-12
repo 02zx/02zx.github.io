@@ -1,1 +1,7 @@
-sh gen.sh
+
+mkdir em eq
+gmx_mpi grompp -f em.mdp -c water.pdb -p topo.top -o em/em
+gmx_mpi mdrun -v -deffnm em/em
+
+gmx_mpi grompp -f eq.mdp -c em/em.gro -p topo.top -o eq/eq
+gmx_mpi mdrun -v -deffnm eq/eq

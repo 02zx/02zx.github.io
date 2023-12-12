@@ -1,4 +1,4 @@
-
+gmx_mpi solvate -nbox 2.5 2.5 2.5 -cs -o water.pdb
 mkdir em eq
 gmx_mpi grompp -f em.mdp -c water.pdb -p topo.top -o em/em
 gmx_mpi mdrun -v -deffnm em/em

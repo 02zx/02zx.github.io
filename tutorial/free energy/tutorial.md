@@ -3,24 +3,24 @@
   本文以水和冰为例，分别演示了液相和固相的自由能计算方法。
 
 
-## Thermodynamic integration
+## Thermodynamic Integration
 
-### 1. constant T (沿等温线积分)
+### 1. Constant T (沿等温线积分)
 $$
 \frac{A(\rho_2,T)}{Nk_BT} = \frac{A(\rho_1,T)}{Nk_BT} + \int_{\rho_1}^{\rho_2} \frac{p(\rho)}{Nk_BT\rho^2} d\rho
 $$
 
-### 2. constant p (沿等压线积分)
+### 2. Constant p (沿等压线积分)
 $$
 \frac{G(T_2,p)}{Nk_BT_2} = \frac{G(T_1,p)}{Nk_BT_1} + \int_{T_1}^{T_2} \frac{H(T)}{Nk_BT^2} dT
 $$
 
-### 3. constant V (沿等容线积分)
+### 3. Constant V (沿等容线积分)
 $$
 \frac{A(T_2,V)}{Nk_BT_2} = \frac{A(T_1,V)}{Nk_BT_1} + \int_{T_1}^{T_2} \frac{U(T)}{Nk_BT^2} dT
 $$
 
-### 4. Hamiltonian integration
+### 4. Hamiltonian Integration
 只要在两个状态(两个状态可以指LJ流体到水 或 甲烷分子到钠离子等)间找到任意一条可逆的路径, 对该路径进行积分即可求出两个状态间的自由能变化. 此处通过定义一个耦合参数 $\lambda$ , 将两个状态的哈密顿量关联起来. 
 
 $$
@@ -79,7 +79,35 @@ $$
 \lambda U_{Coul} = k\frac{\sqrt{\lambda}q_i \sqrt{\lambda}q_j}{r^2}
 $$
 
-下文中将采用SPC/E水模型为例演示自由能计算过程.
+下文中将采用SPC/E水模型为例演示自由能计算过程, 相关文件均可在water路径下获得. 
+SPC/E水模型的参数如下:
+
+|  $\epsilon /k_B$ (K)   | $\sigma$ (nm)  | $q_H$ (e) |
+|  ----                | ----         | ----    |
+| 78.20                | 0.31656      | 0.4238  |
+
+1. Equilibration
+   
+   创建一个360个水分子的水盒子, 在225K 564bar下进行1ns的MD模拟, 将体系跑平衡. 
+   
+2. Hamitonian Integration
+   
+   模拟流程如下: 在11个 $\lambda$ 下分别进行能量最小化, 平衡相以及产生相模拟. 随后使用SPC/E的原子电荷对产生相中的11段轨迹进行rerun, 计算静电势能, 最终积分求解自由能. 
+   
+   初始结构: 以步骤1中产生的结构作为初始结构 (注意:此处与[^1]中的操作不同, 文献中采用前一 $\lambda$ 下产生的结构作为后一 $\lambda$ 下的初始结构. 因为平衡态下的模拟结果不应依赖于初始结构, 所以这一差异对结果没有影响.)
+ 
+   拓扑文件: 以0.1为间隔从0到1产生11个 $\lambda$, 对水分子的原子电荷进行放缩( $q_H(\lambda) = \sqrt{\lambda} q_H $ ), 并写入拓扑文件中.
+
+   模拟参数: 模拟均在NVT系综下进行, 非键作用的cut-off和rlist均设为0.85, 长程静电作用通过PME方法计算, 水分子的键长键角均要进行约束.
+
+   文献值如下[^1] (此处德布罗意热力学波长 $\Lambda$ = 0.1 nm, $A_{LJ} =A_{LJ}^{id} + A_{LJ}^{res}$):
+   
+| Model   | $T$ (K)  | $p$ (bar) | $\rho$  (g/cm $^3$ ) | $A_{water}/(Nk_BT)$ | $A_{LJ}^{res}/(Nk_BT)$ | $A_{LJ}^{id}/(Nk_BT)$ | $\Delta A/(Nk_BT)$ |
+|  ----   | ----     | ----      | ----              | ----              | ----                   | ----                  | ----               | 
+| SPC/E | 225 | 564 | 1.05 | -21.82 | 2.500 | -4.350 | -19.97|
+
+其中 $A_{LJ}^{id} = Nk_BT(\ln(\rho\Lambda^3)-1)$
+
 ```python
     #!/usr/bin/env python3
     print("Hello, World!");

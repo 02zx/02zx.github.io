@@ -6,11 +6,11 @@ https://doi.org/10.1073/pnas.1817135116
 
 2. 计算isotropic structure factor $S(q)$ , 并确定第一个峰出现的位置 $q_0$ 
 
-<!--
+
 $$
 S(q) = 1+ \rho \int_{0}^{\infty}  e^{-i\bf{k}r} g_{OO}(r) dr
 $$
--->
+
 $$
 S(q) = 1+ \frac{4\pi \rho}{q} \int_{0}^{\infty}  r \sin(rq) [g_{OO}(r)-1] dr
 $$

@@ -108,11 +108,12 @@ SPC/E水模型的参数如下:
 
 其中 $A_{LJ}^{id} = Nk_BT(\ln(\rho\Lambda^3)-1)$
 
+<!--
 ```python
     #!/usr/bin/env python3
     print("Hello, World!");
 ```
-
+-->
 
 
 ## 参考文献

@@ -39,7 +39,7 @@ $$
 DP_i = \Big{\langle}   \frac{|\bf{r}_i(t_0) - \bf{r}_i(0)|^2}{MSD}   \Big{\rangle} _{ISO}
 $$
 
-计算可以通过dynasor程序完成[^2], 数据对比[^3]
+计算可以通过dynasor程序完成 [^2] , 数据对比[^3]
 
 # Appendix
 ## For a periodic function f(t) with periodicity of T.

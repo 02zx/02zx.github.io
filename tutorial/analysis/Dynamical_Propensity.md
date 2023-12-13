@@ -1,6 +1,6 @@
-# Dynamical Propensity of Liquid Water
+# Dynamical Propensity of Liquid Water [^1]
 
-https://doi.org/10.1073/pnas.1817135116
+
 
 1. 进行NVT模拟, 计算O-O的径向分布函数 $g_{OO}$ (vmd或gmx计算获得)
 
@@ -39,7 +39,7 @@ $$
 DP_i = \Big{\langle}   \frac{|\bf{r}_i(t_0) - \bf{r}_i(0)|^2}{MSD}   \Big{\rangle} _{ISO}
 $$
 
-计算可以通过dynasor程序完成
+计算可以通过dynasor程序完成, 数据对比[^2]
 
 # Appendix
 ## For a periodic function f(t) with periodicity of T.
@@ -135,3 +135,7 @@ $$
 $$
 F(k) = \sum^{N-1}_{m=0} a_m e^{-2\pi i mk/N}~,k=0,1,2,...,N-1
 $$
+
+
+[^1]:https://doi.org/10.1073/pnas.1817135116
+[^2]:https://doi.org/10.1515/zna-1997-0510

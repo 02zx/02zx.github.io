@@ -21,8 +21,11 @@ for ts in u.trajectory:
     coords[:,:,i] = u.atoms.positions
     i=1+i
 #--------------------------------------
-
-
+print('#########################################################')
+print('#                                                       #')
+print('#  You should use -pbc nojump to convert trajectory!!!  #')
+print('#                                                       #')
+print('#########################################################')
 #----input-------------------------------------------------------------------------
 unit_t=0.01 #set the time interval between each frame, ps
 T=20        #ps

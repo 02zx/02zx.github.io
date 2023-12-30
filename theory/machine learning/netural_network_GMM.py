@@ -107,8 +107,6 @@ for c in range(1, 8):
 
 plt.figure(figsize=(4,3),dpi=300)
 plt.plot(range(1, 8), c_loss,'-ob')
-
-
 plt.xlabel('The number of bottleneck nodes', fontdict={'family':'Arial', 'weight': 'normal', 'size': 15})
 plt.ylabel('Mean squared error', fontdict={'family':'Arial', 'weight': 'normal', 'size': 15})
 

@@ -31,7 +31,7 @@ supercooled water, spinodal line, liquid-liquid critical point, $C_p$, $k_T$ max
 
 
 experiment:
-stable ice[^1][^7][^9][^17] 
+stable ice[^1][^7][^9][^17][^24]
 stable and metastable ice[^5][^19]
 supercooled water, spinodal line, liquid-liquid critical point[^20][^21][^22]
 
@@ -68,3 +68,4 @@ ReaXFF:
 [^21]:Crystallisation of the amorphous ices in the intermediate pressure regime. Scientific Reports | 7: 3995 
 [^22]:Absence of amorphous forms when ice is compressed at low temperature. Nature volume 569, pages542–545 (2019)
 [^23]:Molecular dynamics analysis of elastic properties and new phase formation during amorphous ices transformations. Scientific Reports volume 12, Article number: 13325 (2022)
+[^24]:Phase Diagram of H2O: Thermodynamic Functions of the Phase Transitions of High-Pressure Ices

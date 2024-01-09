@@ -42,7 +42,7 @@ Quantum:
 VII-VIII[^11]
 
 ReaXFF:
-[^14]
+ [^14]
 
 ## References:
 [^1]:The phase diagram of water at high pressures as obtained by computer simulations of the TIP4P/2005 model: the appearance of a plastic crystal phase. Phys. Chem. Chem. Phys., 2009, 11, 543–555

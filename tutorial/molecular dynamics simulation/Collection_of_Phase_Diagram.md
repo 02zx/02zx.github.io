@@ -1,6 +1,6 @@
 
 TIP4P:
-stable ice[^9][^13]
+stable ice[^9][^13][^26]
 
 TIP4P/2005:
 Ih-VII[^1][^9][^25]
@@ -9,7 +9,7 @@ supercooled water, spinodal line, critical point[^15]
 negative pressure ice[^8][^10]
 
 TIP4P/Ice:
-stable ice[^18]
+stable ice[^18][^26]
 supercooled water[^23]
 
 
@@ -70,3 +70,4 @@ ReaXFF:
 [^23]:Molecular dynamics analysis of elastic properties and new phase formation during amorphous ices transformations. Scientific Reports volume 12, Article number: 13325 (2022)
 [^24]:Phase Diagram of H2O: Thermodynamic Functions of the Phase Transitions of High-Pressure Ices
 [^25]:Determining the phase diagram of water from direct coexistence simulations: The phase diagram of the TIP4P/2005 model revisited
+[^26]:Can simple models describe the phase diagram of water?

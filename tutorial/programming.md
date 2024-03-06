@@ -29,9 +29,11 @@ graphics 0 text {0 0 0} [format "%4dps" [expr $vmd_frame(1)*1]] size 6 thickness
 color 16指黑色, 打开vmd后先输入以上代码然后再导入轨迹, 轨迹所在的ID必须是1. 
 
 ffmpeg制作视频：
+
 ffmpeg -r 24 -start_number 0 -i pic.%05d.jpg -vframes 401 -crf 22 -c:v libx264 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p  video.mp4
 
 若图片的长宽不是2的倍数，应使用 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" 进行调整
+
 -start_number 0 和 -vframes 401 控制了图片的范围，从0到400号用于视频合成
 
 

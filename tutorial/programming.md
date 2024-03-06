@@ -8,12 +8,22 @@
 
 # 如何在VMD中添加字幕
 
+color Display Background white
+display projection Orthographic
+display depthcue off
+display rendermode GLSL
+display shadows on
+display ambientocclusion on 
+light 2 on
+light 3 on
+axes location Off
+
 
 trace variable vmd_frame(1) w sdf
 mol new
 proc sdf {args} {global vmd_frame
 graphics 0 delete all
 graphics 0 color 16
-graphics 0 text {0 0 0} "[expr $vmd_frame(1)*1]ps" size 6 thickness 4}
+graphics 0 text {0 0 0} [format "%4dps" [expr $vmd_frame(1)*1]] size 6 thickness 4}
 
 #color 16是黑色

@@ -25,7 +25,7 @@ $$
 $$
 
 where $k$ is the number of ion species, $\nu_i$, $q_i$, $D_i$ are the stoichiometric number, charge, and self-diffusion coefficient for $i$-th specie. The first term $\sigma_{NE}$ is the Nernst−Einstein equation (law of the independent 
-migration of ions). The second term $\sigma_{self}$ considers all the ion-ion interaction between the same specie, for example, $Na^+ - Na^+$,  $K^+ - K^+$, and $Cl^- - Cl^-$ are considered, but $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$ are not. The third term $\sigma_{cross}$ considers all the ion-ion interaction between the different specie
+migration of ions). The second term $\sigma_{self}$ considers all the ion-ion interaction between the same specie, for example, $Na^+ - Na^+$,  $K^+ - K^+$, and $Cl^- - Cl^-$ are considered, but $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$ are not. The third term $\sigma_{cross}$ considers all the ion-ion interaction between the different species, for example, $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$.
 
 
  

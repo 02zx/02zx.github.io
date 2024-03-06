@@ -6,7 +6,7 @@
 
 
 
-# 如何在VMD中添加字幕
+# 如何在VMD中添加字幕[^1]
 ```tcl
 color Display Background white
 display projection Orthographic
@@ -26,4 +26,7 @@ graphics 0 delete all
 graphics 0 color 16
 graphics 0 text {0 0 0} [format "%4dps" [expr $vmd_frame(1)*1]] size 6 thickness 4}
 ```
-#color 16是黑色
+color 16指黑色, 打开vmd后先输入以上代码然后再导入轨迹, 轨迹所在的ID必须是1. 
+
+
+[^1]:http://sobereva.com/13

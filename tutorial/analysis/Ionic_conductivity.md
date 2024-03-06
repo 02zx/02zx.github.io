@@ -17,7 +17,7 @@ $$
 $$
 
 $$
-\sigma_{self} = \frac{1}{6k_BVT} \sum_{i=1}^k \lim_{t-> \infty} \frac{\rm d}{\rm dt} \bigg{\langle}   \sum_{a=1}^{N_i}  \sum_{b=1}^{N_i}  q_i^2\[ \vec{r}_a(t) -\vec{r}_a(0) \] \cdot \[ \vec{r}_b(t) - \vec{r}_b(0) \]  \bigg{\rangle} 
+\sigma_{self} = \frac{1}{6k_BVT} \sum_{i=1}^k \lim_{t-> \infty} \frac{\rm d}{\rm dt} \bigg{\langle}   \sum_{a=1}^{N_i-1}  \sum_{b=a+1}^{N_i}  q_i^2\[ \vec{r}_a(t) -\vec{r}_a(0) \] \cdot \[ \vec{r}_b(t) - \vec{r}_b(0) \]  \bigg{\rangle} 
 $$
 
 $$

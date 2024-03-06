@@ -7,7 +7,7 @@
 
 
 # 如何在VMD中添加字幕
-
+```tcl
 color Display Background white
 display projection Orthographic
 display depthcue off
@@ -25,5 +25,5 @@ proc sdf {args} {global vmd_frame
 graphics 0 delete all
 graphics 0 color 16
 graphics 0 text {0 0 0} [format "%4dps" [expr $vmd_frame(1)*1]] size 6 thickness 4}
-
+```
 #color 16是黑色

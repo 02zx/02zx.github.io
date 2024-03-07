@@ -2,11 +2,15 @@ import MDAnalysis as mda
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
+import sys
 
 #---read trajectories-------------
-tpr = 'conf.pdb'
-traj = '420.10ps.lammpstrj'
-nbins=40
+tpr = '/home/Share/XZ/conf.pdb'
+fnm=sys.argv[1]
+traj = '{}.lammpstrj'.format(fnm)
+nbins=int(sys.argv[2])
+
+#-----------------------------------------------
 u = mda.Universe(tpr, traj,format='LAMMPSDUMP')
 selection = 'name O'
 N=u.atoms.select_atoms(selection).n_atoms
@@ -71,7 +75,15 @@ for num in range(nbins):
     output[num,1], _ = np.polyfit(t,data[:,num], 1) #slope ->second col of output
     output[num,0]=0+num*bin_z+bin_z/2 # z coordinate -> first col of output
 
-with open('diffusion_z.txt', 'w') as f:
+with open('{}.dz'.format(fnm), 'w') as f:
     print('#z (nm), Diffusivity (nm^2/ps)', file=f)
     for i in range(nbins):
         print("{:.3f} {:.4g}".format(output[i,0]/10, output[i,1]/100), file=f)
+
+with open('msd.log','w') as f:
+    print('#time(ps) msd(bin1->nbins) (nm^2)', file=f)
+    for i in range(len(t)):
+        print("{:.3f}".format(t[i]), end=' ',file=f)
+        for j in range(nbins):
+            print("{:.4g}".format(data[i,j]), end=' ',file=f)
+        print(" ",file=f)

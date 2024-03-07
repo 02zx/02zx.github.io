@@ -5,6 +5,8 @@ from tqdm import tqdm
 import sys
 
 fnm=sys.argv[1]
+Temp=308.15
+
 #---read trajectories-------------
 tpr = '{}.gro'.format(fnm)
 traj = '{}.xtc'.format(fnm)
@@ -36,14 +38,14 @@ print('#####################################################')
 
 #----Settings-------------------------------------------------------------------------
 unit_t=1 #set the time interval between each frame, ps
-T=1000        #ps
+T=5000        #ps
 dt=1     #ps
-ave_time=1000  #ps
+ave_time=5000  #ps
 print('settings:')
 print('computing trajectory in {} ps/frame'.format(unit_t))
 print('computing time from 0 to {} ps with a interval of {} ps'.format(T, dt))
 print('each point are averaged by {} ps'.format(ave_time))
-
+print('Temperature: {} K'.format(Temp))
 
 ave_fr = int(np.round(ave_time/unit_t))
 
@@ -83,9 +85,21 @@ ionic_contribution[0,:]
 
 
 #output
+
 ionic_conductivity=np.sum(ionic_contribution, axis=1)
+
+#fitting
+
+slope_total, _ = np.polyfit(t,ionic_conductivity*(1.86e+6)/6/V/Temp, 1)
+slope_NE, _ = np.polyfit(t,ionic_contribution[:,0]*(1.86e+6)/6/V/Temp, 1)
+
 with open('{}.conduct'.format(fnm), 'w') as f:
-    print('#time(ps) total conductivity(S*ps/m) msd(nm^2) self-contribution(nm^2) cross-contribution(nm^2)', file=f)
+    print('#Total conductivity, NE conductivity (S/m): {} {}'.format(round(slope_total*(1.86e+6)/6/V/Temp,3), round(slope_NE*(1.86e+6)/6/V/Temp,3)), file=f)
+    print('#time(ps) total_conductivity(S*ps/m) conductivity_NE(S*ps/m) msd(nm^2) self-contribution(nm^2) cross-contribution(nm^2)', file=f)
+    print('#Volume: {} nm^3'.format(round(V,3)), file=f)
+    print('#Temperature: {} K'.format(round(Temp,3)), file=f)
+    print('#contribution(nm^2)--*(1.86e+6)/6/V/Temp-->conductivity(S*ps/m)', file=f)
     print('0 0 0 0 0', file=f)
     for i in range(len(t)):
-        print("{:.2f} {:.4g} {:.4g} {:.4g} {:.4g}".format(t[i],ionic_conductivity[i]*87.86/6, ionic_contribution[i,0],ionic_contribution[i,1],ionic_contribution[i,2] ), file=f)
+        print("{:.2f} {:.4g} {:.4g} {:.4g} {:.4g}".format(t[i],ionic_conductivity[i]*(1.86e+6)/6/V/Temp, ionic_contribution[i,0],ionic_contribution[i,1],ionic_contribution[i,2] ), file=f)
+

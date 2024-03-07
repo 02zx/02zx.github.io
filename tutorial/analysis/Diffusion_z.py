@@ -9,7 +9,7 @@ tpr = '/home/Share/XZ/conf.pdb'
 fnm=sys.argv[1]
 traj = '{}.lammpstrj'.format(fnm)
 nbins=int(sys.argv[2])
-
+direction=int(sys.argv[3])
 #-----------------------------------------------
 u = mda.Universe(tpr, traj,format='LAMMPSDUMP')
 selection = 'name O'
@@ -44,7 +44,7 @@ print('settings:')
 print('computing trajectory in {} ps/frame'.format(unit_t))
 print('computing time from 0 to {} ps with a interval of {} ps'.format(T, dt))
 print('each point are averaged by {} ps'.format(ave_time))
-
+print('Sampling along: {} axis using {} bins'.format(['x','y','z'][direction],nbins))
 
 ave_fr = int(np.round(ave_time/unit_t))
 
@@ -56,12 +56,12 @@ if ave_fr+T/dt >= total_num_frames:
 
 t = np.arange(1*dt,T,dt)
 dfr = np.round(t/unit_t)
-bin_z=np.max(coords[:,2,:])/nbins
+bin_z=np.max(coords[:,direction,:])/nbins
 def mean_square_displacement(dfr):  
     result = np.zeros((ave_fr,nbins), dtype=float)  
     for fr in range(ave_fr):  #loop for time
         for z in range(nbins):#loop for z position, take sum for each bin
-            result[fr,z]=np.sum(np.square(coords[:,:, fr + int(dfr)] - coords[:,:, fr])[(coords[:,2,fr]>=0+z*bin_z) & (coords[:,2,fr]<0+(z+1)*bin_z)])/N           
+            result[fr,z]=np.sum(np.square(coords[:,:, fr + int(dfr)] - coords[:,:, fr])[(coords[:,direction,fr]>=0+z*bin_z) & (coords[:,direction,fr]<0+(z+1)*bin_z)])/N           
     return np.mean(result,axis=0)  #take average for time
 
 
@@ -76,9 +76,9 @@ for num in range(nbins):
     output[num,0]=0+num*bin_z+bin_z/2 # z coordinate -> first col of output
 
 with open('{}.dz'.format(fnm), 'w') as f:
-    print('#z (nm), Diffusivity (nm^2/ps)', file=f)
+    print('#sampling_axis (nm), Diffusivity (nm^2/ps)', file=f)
     for i in range(nbins):
-        print("{:.3f} {:.4g}".format(output[i,0]/10, output[i,1]/100), file=f)
+        print("{:.3f} {:.4g}".format(output[i,0]/10, output[i,1]/100/6), file=f)
 
 with open('msd.log','w') as f:
     print('#time(ps) msd(bin1->nbins) (nm^2)', file=f)
@@ -87,3 +87,5 @@ with open('msd.log','w') as f:
         for j in range(nbins):
             print("{:.4g}".format(data[i,j]), end=' ',file=f)
         print(" ",file=f)
+        
+        

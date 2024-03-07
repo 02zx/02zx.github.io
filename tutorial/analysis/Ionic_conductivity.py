@@ -94,7 +94,7 @@ slope_total, _ = np.polyfit(t,ionic_conductivity*(1.86e+6)/6/V/Temp, 1)
 slope_NE, _ = np.polyfit(t,ionic_contribution[:,0]*(1.86e+6)/6/V/Temp, 1)
 
 with open('{}.conduct'.format(fnm), 'w') as f:
-    print('#Total conductivity, NE conductivity (S/m): {} {}'.format(round(slope_total*(1.86e+6)/6/V/Temp,3), round(slope_NE*(1.86e+6)/6/V/Temp,3)), file=f)
+    print('#Total conductivity, NE conductivity (S/m): {} {}'.format(round(slope_total,3), round(slope_NE,3)), file=f)
     print('#time(ps) total_conductivity(S*ps/m) conductivity_NE(S*ps/m) msd(nm^2) self-contribution(nm^2) cross-contribution(nm^2)', file=f)
     print('#Volume: {} nm^3'.format(round(V,3)), file=f)
     print('#Temperature: {} K'.format(round(Temp,3)), file=f)

@@ -24,8 +24,13 @@ $$
 \sigma_{cross} = \frac{1}{6k_BVT} \sum_{i=1}^{k-1} \sum_{j=i+1}^k \lim_{t-> \infty} \frac{\rm d}{\rm dt} \bigg{\langle}   \sum_{a=1}^{N_i}  \sum_{b=1}^{N_j}  q_iq_j\[ \vec{r}_a(t) -\vec{r}_a(0) \] \cdot \[ \vec{r}_b(t) - \vec{r}_b(0) \]  \bigg{\rangle} 
 $$
 
-where $k$ is the number of ion species, $\nu_i$, $q_i$, $D_i$ are the stoichiometric number, charge, and self-diffusion coefficient for $i$-th specie. The first term $\sigma_{NE}$ is the Nernst−Einstein equation (law of the independent 
-migration of ions). The second term $\sigma_{self}$ considers all the ion-ion interaction between the same specie, for example, $Na^+ - Na^+$,  $K^+ - K^+$, and $Cl^- - Cl^-$ are considered, but $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$ are not. The third term $\sigma_{cross}$ considers all the ion-ion interaction between the different species, for example, $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$.
+where $k$ is the number of ion species, $\nu_i$, $q_i$, $D_i$ are the stoichiometric number, charge, and self-diffusion coefficient for $i$-th specie. 
+
+The first term $\sigma_{NE}$ is the Nernst−Einstein equation (law of the independent migration of ions). 
+
+The second term $\sigma_{self}$ considers all the ion-ion interaction between the same specie, for example, $Na^+ - Na^+$,  $K^+ - K^+$, and $Cl^- - Cl^-$ are considered, but $Na^+ - Na^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$ are not. 
+
+The third term $\sigma_{cross}$ considers all the ion-ion interaction between the different species, for example, $Na^+ - K^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$.
 
 
  

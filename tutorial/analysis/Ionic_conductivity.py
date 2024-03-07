@@ -84,7 +84,7 @@ ionic_contribution[0,:]
 
 #output
 ionic_conductivity=np.sum(ionic_contribution, axis=1)
-with open('conductivity.txt', 'w') as f:
+with open('{}.conduct'.format(fnm), 'w') as f:
     print('#time(ps) total conductivity(S*ps/m) msd(nm^2) self-contribution(nm^2) cross-contribution(nm^2)', file=f)
     print('0 0 0 0 0', file=f)
     for i in range(len(t)):

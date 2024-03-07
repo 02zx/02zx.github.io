@@ -9,3 +9,7 @@ T=5        #统计时长,即最终msd-t图中的t的范围, 单位:ps
 dt=0.1     #统计间隔,每个dt更新一次原点, 单位:ps
 ave_time=5  #统计范围, 每次更新后对ave_time进行平均, 单位:ps
 ```
+运行方式: python3 Diffusion_z.py filename nbins direction
+```bash
+python3 Diffusion_z.py md 50 2 #0,1,2分别对应x,y,z
+```

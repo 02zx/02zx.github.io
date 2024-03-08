@@ -13,3 +13,5 @@ ave_time=5  #统计范围, 每次更新后对ave_time进行平均, 单位:ps
 ```bash
 python3 Diffusion_z.py md 50 2 #0,1,2分别对应x,y,z
 ```
+
+# fortran code

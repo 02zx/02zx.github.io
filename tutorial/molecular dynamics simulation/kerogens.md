@@ -63,10 +63,15 @@ sbatch run.sh
 
 # 含水量
 
+
+
+
 # 甲烷吸附
+## 计算helium void fraction
 
+## 计算ideal gas Rosenbluth weight
 
-
+p=0-24MPa, T=338K
 
 [^1]:页岩气吸附与CO_2驱替及封存机理的分子模拟研究-周娟
 [^2]:https://www.materialsdesign.com/Publications/Ungerer2015

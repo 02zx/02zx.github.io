@@ -9,6 +9,13 @@
 1.对单分子进行能量最小化(最速下降法)
 ```bash
 mkdir em eq prod
+
+#---修改topo.top文件----
+[ molecules ]
+; Molecule      nmols
+IIC        1
+#------------
+
 gmx grompp -f em.mdp -c IIC.pdb -p topo.top -o em/em
 gmx mdrun -v -deffnm em/em
 ```
@@ -22,6 +29,13 @@ sbatch run.sh
 3.在10 $^3$ nm盒子内插入8个分子
 ```bash
 gmx insert-molecules -box 10 10 10 -ci eq/eq.gro -nmol 8 -o conf.pdb
+
+#---修改topo.top文件----
+[ molecules ]
+; Molecule      nmols
+IIC        8
+#------------
+
 gmx grompp -f eq.mdp -c conf.pdb -p topo.top -o prod/eq
 sbatch run.sh
 ```

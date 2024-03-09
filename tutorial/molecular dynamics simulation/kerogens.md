@@ -45,6 +45,9 @@ gmx grompp -f prod.mdp -c prod/eq2.gro -p topo.top -o prod/md
 sbatch run.sh
 ```
 
+# 含水量
+
+# 甲烷吸附
 
 
 

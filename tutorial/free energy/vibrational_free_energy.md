@@ -64,10 +64,29 @@ $$
 \ln(Q) = -\sum_{l=1}^{DN} \ln \bigg{\[} 2\sinh (\frac{\beta h\nu_l}{2})  \bigg{\]}
 $$
 
-如果已知声子态随频率的分布 $g(\nu)$ , 则可以从配分函数求出自由能 $A$ :
+如果已知声子态随频率的分布 $g(\nu)$ ，又称为态密度, 则可以从配分函数求出自由能 $A$ :
 
 $$
 A = -\frac{1}{\beta} \ln Q = \frac{1}{\beta} \int_{0}^{\infty} d \nu g(\nu) \ln \bigg{\[} 2\sinh (\frac{\beta h\nu_l}{2})  \bigg{\]}
 $$
 
+## 正则分析
+
+通过正则分析可以获得态密度, 目前gromacs对三点水模型的正则分析支持良好, 但四点水模型中正则分析会出现大量虚频无法解决。
+
+## 速度自相关函数求算态密度
+
+除正则分析外还可以通过对质量权重的速度自相关函数(mass-weighted velocity autocorrelation function, 简写为mw-vacf)进行傅里叶变换来获得速度的态密度分布(VDOS), 在低温下其结果与正则分析基本吻合. 通过[^2]中的公式22-23可以计算体系的自由度, 其数量应为3N, 其中N为体系中的总原子数. 实际计算出的结果会与3N略有差异.
+
+需要注意以下几点:
+1. gmx velacc只能计算vacf, 若要使用公式22需要对每种原子进行计算然后乘以其质量后求和. 另外, 按此步骤算出的mw-vacf与gmx dos的结果不同, 暂时无法确定gmx dos是如何计算mw-vacf的. 同时需要注意, gmx dos计算的VDOS可能存在问题[^3]
+2. 该方法基于谐振近似, 应在尽可能低的温度下进行模拟
+3. 体积对计算结果又显著影响,若要和正则分析的结果对比应保持相同体积(NVT下进行模拟).
+
+
+
 [^1]:Introduction to Modern Statistical Mechanics-pp:90-92
+[^2]:J. Chem. Phys. 150, 194111 (2019)
+[^3]:Two Faces of the Two-Phase Thermodynamic Model. J.Chem.TheoryComput.2021, 17, 7187−7194
+[^4]:J. Phys. Chem. B2010,114,8191–8198
+[^5]:Nanoscale, 2020, 12, 18701

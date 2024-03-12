@@ -188,7 +188,7 @@ with open('{}/water.mwvacf'.format(N_mol),'w') as f:
 
 ```python
 def vdos(N_mol):
-    filename = "./{}/water.vacf".format(N_mol)
+    filename = "./{}/water.mwvacf".format(N_mol)
     data = np.loadtxt(filename)
     
     x = data[:, 0]
@@ -278,7 +278,7 @@ a_vib = F_norm(out_vdos[0,1:int(out_vdos.shape[1]/2)]/period,
        out_vdos[0,1]/period)
 
 #pauling's residual entropy.
-TSc=Temp*8.314*np.log(3/2)
+TSc=Temp*8.314*np.log(3/2)/1000
 
 print('Nmol^(1/3) A_vib/Nmol(kJ/mol), TSc/Nmol/1000(kJ/mol):', np.cbrt(N_mol), a_vib, TSc)
 

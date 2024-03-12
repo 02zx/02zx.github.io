@@ -108,8 +108,9 @@ $$
 ```bash
 #---npt.mdp----
 constraints         =  hbonds
+dt                  =  0.001
 tcoupl              =  V-rescale
-tau-t               =  1
+tau-t               =  0.2
 ref-t               =  10
 Pcoupl              =  C-rescale
 Pcoupltype          =  isotropic

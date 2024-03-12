@@ -2,7 +2,7 @@
 import numpy as np
 import sys
 
-N_mol=288  # number of molecules sys.argv[1]
+N_mol=int(sys.argv[1])  # number of molecules sys.argv[1]
 Temp=10 #simulation temperature
 OW=np.loadtxt('{}/O.xvg'.format(N_mol))
 HW=np.loadtxt('{}/HW.xvg'.format(N_mol))
@@ -14,7 +14,6 @@ with open('{}/water.mwvacf'.format(N_mol),'w') as f:
     for i in range(len(OW[:,1])):
         print(OW[i,0],mwvacf[i],file=f)
 
-
 def vdos(N_mol):
     filename = "./{}/water.mwvacf".format(N_mol)
     data = np.loadtxt(filename)
@@ -24,16 +23,16 @@ def vdos(N_mol):
     
     
     N=len(y)
-    print(N_mol)
-    dt = 0.01
-    L = dt*float(N_mol-1)
+    print(N)
+    dt = data[1, 0]
+    L = dt*float(N-1)
     
     print(L)
     
     for i in range(len(y)):
         if i == 0:
             continue
-        y[i] = y[i] * np.sin(np.pi * i / (N_mol-1)) / (np.pi * i / (N_mol-1)) 
+        y[i] = y[i] * np.sin(np.pi * i / (N-1)) / (np.pi * i / (N-1)) 
     
     n_values = []
     an_values = []
@@ -66,9 +65,13 @@ def vdos(N_mol):
 out_vdos=vdos(N_mol)
 total=np.sum(out_vdos[1,:])*out_vdos[0,1] #integral the vdos
 with open('{}/water.vdos'.format(N_mol),'w') as f:
-    for i in range(out_vdos.shape[1]):
-        print('#frequency(cm^-1) normalized_vdos, n, vdos',file=f)
-        print(out_vdos[0,i]/period/(3/100),out_vdos[1,i]/total,out_vdos[1,i],file=f)
+    print('#frequency(cm^-1) normalized_vdos, n, vdos',file=f)
+    for i in range(int(out_vdos.shape[1]/2)):
+        print(round(out_vdos[0,i]/period/(3/100),4),
+              round(out_vdos[1,i]/total,4),
+              round(out_vdos[0,i],4),
+              round(out_vdos[1,i],4)
+              ,file=f)
 
 
 #degree of freedom

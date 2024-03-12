@@ -67,6 +67,9 @@ sbatch run.sh
 
 
 # 甲烷吸附
+
+
+
 ## 计算helium void fraction
 
 ## 计算ideal gas Rosenbluth weight

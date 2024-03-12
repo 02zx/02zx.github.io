@@ -122,7 +122,7 @@ comm-mode           = Angular
 ```
 #### $NVE$ 模拟
 
-在 $NVE$ 系综下模拟50ps, 取后10ps用于计算自相关函数
+在 $NVE$ 系综下模拟50ps用于计算自相关函数
 ```bash
 #---nve.mdp----
 constraints         =  hbonds

@@ -171,7 +171,7 @@ sed -i "$"d $i/HW.xvg
 import numpy as np
 import sys
 
-N_mol=288  # number of molecules sys.argv[1]
+N_mol=int(sys.argv[1])  # number of molecules sys.argv[1]
 Temp=10 #simulation temperature
 OW=np.loadtxt('{}/O.xvg'.format(N_mol))
 HW=np.loadtxt('{}/HW.xvg'.format(N_mol))
@@ -196,16 +196,16 @@ def vdos(N_mol):
     
     
     N=len(y)
-    print(N_mol)
-    dt = 0.01
-    L = dt*float(N_mol-1)
+    print(N)
+    dt = data[1, 0]
+    L = dt*float(N-1)
     
     print(L)
     
     for i in range(len(y)):
         if i == 0:
             continue
-        y[i] = y[i] * np.sin(np.pi * i / (N_mol-1)) / (np.pi * i / (N_mol-1)) 
+        y[i] = y[i] * np.sin(np.pi * i / (N-1)) / (np.pi * i / (N-1)) 
     
     n_values = []
     an_values = []
@@ -238,9 +238,14 @@ def vdos(N_mol):
 out_vdos=vdos(N_mol)
 total=np.sum(out_vdos[1,:])*out_vdos[0,1] #integral the vdos
 with open('{}/water.vdos'.format(N_mol),'w') as f:
-    for i in range(out_vdos.shape[1]):
-        print('#frequency(cm^-1) normalized_vdos, n, vdos',file=f)
-        print(out_vdos[0,i]/period/(3/100),out_vdos[1,i]/total,out_vdos[1,i],file=f)
+    print('#frequency(cm^-1) normalized_vdos, n, vdos',file=f)
+    for i in range(int(out_vdos.shape[1]/2)):
+        print(round(out_vdos[0,i]/period/(3/100),4),
+              round(out_vdos[1,i]/total,4),
+              round(out_vdos[0,i],4),
+              round(out_vdos[1,i],4)
+              ,file=f)
+
 ```
 
 ### 对态密度积分求得振动自由能( $A_{vib}$ )
@@ -281,7 +286,6 @@ a_vib = F_norm(out_vdos[0,1:int(out_vdos.shape[1]/2)]/period,
 TSc=Temp*8.314*np.log(3/2)/1000
 
 print('Nmol^(1/3) A_vib/Nmol(kJ/mol), TSc/Nmol/1000(kJ/mol):', np.cbrt(N_mol), a_vib, TSc)
-
 ```
 ### 计算总自由能( $A$ )
 上一步中已经求得 $A_{vib}, TS_c$ 了, 只需再加上 $U_0$ . 其数值可以通过能量最小化获得, 使用最速下降法计算即可 (gromacs中只有该方法支持约束); 最终带入 Eq.2 即可.

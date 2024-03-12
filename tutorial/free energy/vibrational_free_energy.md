@@ -149,8 +149,8 @@ EOF
 
 ```bash
 mkdir $i
-echo "3"|gmx_mpi velacc -f ./md/$i.trr -s ./md/$i.tpr  -o ./$i/O.xvg -n ./ndx/${i}.ndx -dt 0.01 -b 10 -acflen 5 -nonormalize -norecip
-echo "4"|gmx_mpi velacc -f ./md/$i.trr -s ./md/$i.tpr  -o ./$i/HW.xvg -n ./ndx/${i}.ndx -dt 0.01 -b 10 -acflen 5 -nonormalize -norecip
+echo "3"|gmx_mpi velacc -f ./md/$i.trr -s ./md/$i.tpr  -o ./$i/O.xvg -n ./ndx/${i}.ndx -dt 0.01 -b 10 -acflen 501 -nonormalize -norecip
+echo "4"|gmx_mpi velacc -f ./md/$i.trr -s ./md/$i.tpr  -o ./$i/HW.xvg -n ./ndx/${i}.ndx -dt 0.01 -b 10 -acflen 501 -nonormalize -norecip
 
 sed -i "1,17"d $i/O.xvg
 sed -i "$"d $i/O.xvg

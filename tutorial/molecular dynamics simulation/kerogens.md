@@ -68,11 +68,145 @@ sbatch run.sh
 
 # 甲烷吸附
 
+需要准备的文件:
+kerogens.cif
+pseudo_atoms.def
+force_field_mixing_rules.def
+helium.def
+ch4.def
+
+---kerogens.cif---
+将上一步中模拟产生的prod/md.gro转换为pdb文件, 然后再用Material Studio打开保存成cif即可.
+文件见附件
+
+---pseudo_atoms.def---
+GAFF2_XX的参数取自AutoFF, 下同
+
+```bash
+#number of pseudo atoms. Created by AutoFF
+17
+# type print as scat oxidation mass charge polarization B-factor radii connectivity anisotropic anisotropic-type tinker-type
+GAFF2_ca yes    C   C 0    12.010000   -0.126100 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_c2 yes    C   C 0    12.010000   -0.159800 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_na yes    N   N 0    14.010000   -0.153100 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_hn yes    H   H 0     1.008000    0.317900 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_ha yes    H   H 0     1.008000    0.127700 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_h4 yes    H   H 0     1.008000    0.172900 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_c3 yes    C   C 0    12.010000   -0.023700 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_hc yes    H   H 0     1.008000    0.048300 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_nb yes    N   N 0    14.010000   -0.153200 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_os yes    O   O 0    16.000000   -0.432800 0.0 1.0 1.0 0 0.0 relative 0
+ GAFF2_c yes    C   C 0    12.010000    0.609300 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_ss yes    S   S 0    32.060000   -0.352800 0.0 1.0 1.0 0 0.0 relative 0
+ GAFF2_o yes    O   O 0    16.000000   -0.603600 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_oh yes    O   O 0    16.000000   -0.620800 0.0 1.0 1.0 0 0.0 relative 0
+GAFF2_ho yes    H   H 0     1.008000    0.446700 0.0 1.0 1.0 0 0.0 relative 0
+ Tra_CH4 yes    CH4 CH4 0  16.043000    0.000000 0.0 1.0 1.0 0 0.0 relative 0
+      He yes    He  He  0   4.002602    0.0      0.0 1.0 1.0 0 0   relative 0
+```
+---force_field_mixing_rules.def---
+
+```bash
+# general rule for shifted vs truncated. Created by AutoFF
+shift
+# general rule tail corrections
+no
+# number of defined interactions
+17
+# type interaction, parameters. IMPORTANT: define generic matches first
+GAFF2_ca  lennard-jones    49.718090    3.315212
+GAFF2_c2  lennard-jones    49.718090    3.315212
+GAFF2_na  lennard-jones   102.757429    3.205810
+GAFF2_hn  lennard-jones     5.032195    1.106496
+GAFF2_ha  lennard-jones     8.101834    2.625479
+GAFF2_h4  lennard-jones     8.101834    2.536389
+GAFF2_c3  lennard-jones    54.247066    3.397710
+GAFF2_hc  lennard-jones    10.466966    2.600177
+GAFF2_nb  lennard-jones    47.352958    3.384168
+GAFF2_os  lennard-jones    36.533738    3.156098
+ GAFF2_c  lennard-jones    49.718090    3.315212
+GAFF2_ss  lennard-jones   142.109244    3.532413
+ GAFF2_o  lennard-jones    73.621018    3.048121
+GAFF2_oh  lennard-jones    46.799417    3.242871
+GAFF2_ho  lennard-jones     2.365132    0.537925
+ Tra_CH4  lennard-jones   147.999944    3.730000
+      He  lennard-jones    10.9         2.64
+# general mixing rule for Lennard-Jones
+Lorentz-Berthelot
+```
 
 
-## 计算helium void fraction
+---helium.def---
+helium.def和ch4.def可以直接从RASPA的安装路径下获取.
 
-## 计算ideal gas Rosenbluth weight
+```bash
+# critical constants: Temperature [T], Pressure [Pa], and Acentric factor [-]
+5.2
+228000.0
+-0.39
+# Number Of Atoms
+1
+# Number Of Groups
+1
+# Alkane-group
+flexible
+# number of atoms
+1
+# atomic positions
+0 He
+# Chiral centers Bond  BondDipoles Bend  UrayBradley InvBend  Torsion Imp. Torsion Bond/Bond Stretch/Bend Bend/Bend Stretch/Torsion Bend/Torsion IntraVDW IntraCoulomb
+               0    0            0    0            0       0        0            0         0            0         0               0            0        0            0
+# Number of config moves
+0
+```
+---ch4.def---
+```bash
+# critical constants: Temperature [T], Pressure [Pa], and Acentric factor [-]. Created by AutoFF
+0.0
+0.0
+0.0
+#Number Of Atoms
+1
+#Number Of Group
+1
+# ch4-group
+flexible
+#number of atoms
+1
+# atomic positions
+0      Tra_CH4      1.064000   -0.028700    0.071300
+# Chiralcenters Bond BondDipoles Bend UrayBradley InvBend Torsion Imp.Torsion Bond/Bond Stretch/Bend Bend/Bend Stretch/Torsion Bend/Torsion IntraVDW IntraCoulomb
+0  0  0  0  0  0  0  0  0  0  0  0  0  0
+# Number of config moves
+0
+```
+
+## 计算干酪根体系的helium void fraction
+输入文件内容如下(参考自手册example):
+由于unitcell体积比较大( $3^3$ nm $^3$ ), 模拟会比较耗时
+---He_frac.in---
+```bash
+SimulationType		MonteCarlo
+NumberOfCycles		500000
+printEvery		10000
+PrintPropertiesEvery	10000
+
+Forcefield		local
+
+Framework		0
+FrameworkName		kerogens
+UnitCells		1 1 1
+ExternalTemperature	338.0
+
+Component 0 MoleculeName		helium
+	    MoleculeDefinition		local
+	    WidomProbability		1.0
+	    CreateNumberOfMolecules 	0
+```
+
+
+
+## 计算甲烷的ideal gas Rosenbluth weight
 
 p=0-24MPa, T=338K
 

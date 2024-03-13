@@ -69,17 +69,20 @@ sbatch run.sh
 # 甲烷吸附
 
 需要准备的文件:
+```bash
 kerogens.cif
 pseudo_atoms.def
 force_field_mixing_rules.def
 helium.def
 ch4.def
-
+```
 ---kerogens.cif---
+
 将上一步中模拟产生的prod/md.gro转换为pdb文件, 然后再用Material Studio打开保存成cif即可.
 文件见附件
 
 ---pseudo_atoms.def---
+
 GAFF2_XX的参数取自AutoFF, 下同
 
 ```bash
@@ -137,6 +140,7 @@ Lorentz-Berthelot
 
 
 ---helium.def---
+
 helium.def和ch4.def可以直接从RASPA的安装路径下获取.
 
 ```bash
@@ -183,7 +187,9 @@ flexible
 
 ## 计算干酪根体系的helium void fraction
 输入文件内容如下(参考自手册example):
+
 由于unitcell体积比较大( $3^3$ nm $^3$ ), 模拟会比较耗时
+
 ---He_frac.in---
 ```bash
 SimulationType		MonteCarlo

@@ -87,23 +87,8 @@ GAFF2_XX的参数取自AutoFF, 下同
 
 ```bash
 #number of pseudo atoms. Created by AutoFF
-17
+2
 # type print as scat oxidation mass charge polarization B-factor radii connectivity anisotropic anisotropic-type tinker-type
-GAFF2_ca yes    C   C 0    12.010000   -0.126100 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_c2 yes    C   C 0    12.010000   -0.159800 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_na yes    N   N 0    14.010000   -0.153100 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_hn yes    H   H 0     1.008000    0.317900 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_ha yes    H   H 0     1.008000    0.127700 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_h4 yes    H   H 0     1.008000    0.172900 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_c3 yes    C   C 0    12.010000   -0.023700 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_hc yes    H   H 0     1.008000    0.048300 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_nb yes    N   N 0    14.010000   -0.153200 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_os yes    O   O 0    16.000000   -0.432800 0.0 1.0 1.0 0 0.0 relative 0
- GAFF2_c yes    C   C 0    12.010000    0.609300 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_ss yes    S   S 0    32.060000   -0.352800 0.0 1.0 1.0 0 0.0 relative 0
- GAFF2_o yes    O   O 0    16.000000   -0.603600 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_oh yes    O   O 0    16.000000   -0.620800 0.0 1.0 1.0 0 0.0 relative 0
-GAFF2_ho yes    H   H 0     1.008000    0.446700 0.0 1.0 1.0 0 0.0 relative 0
  Tra_CH4 yes    CH4 CH4 0  16.043000    0.000000 0.0 1.0 1.0 0 0.0 relative 0
       He yes    He  He  0   4.002602    0.0      0.0 1.0 1.0 0 0   relative 0
 ```

@@ -110,7 +110,7 @@ $$
 constraints         =  hbonds
 dt                  =  0.001
 tcoupl              =  V-rescale
-tau-t               =  0.2
+tau-t               =  0.1
 ref-t               =  10
 Pcoupl              =  C-rescale
 Pcoupltype          =  isotropic
@@ -121,6 +121,7 @@ ref_p               =  1.0
 comm-mode           = Angular
 ```
 #### $NVE$ 模拟
+模拟时间和步长可能会影响最终结果, 需要进行测试
 
 在 $NVE$ 系综下模拟50ps用于计算自相关函数
 ```bash

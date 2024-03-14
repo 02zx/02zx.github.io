@@ -121,7 +121,7 @@ ref_p               =  1.0
 comm-mode           = Angular
 ```
 #### $NVE$ 模拟
-模拟时间和步长可能会影响最终结果, 需要进行测试
+模拟时间和步长可能会影响最终结果, 需要进行测试[^6]
 
 在 $NVE$ 系综下模拟50ps用于计算自相关函数
 ```bash
@@ -300,3 +300,4 @@ Pauling's residual entropy, 1PT+AC, 2PT method
 [^3]:Two Faces of the Two-Phase Thermodynamic Model. J.Chem.TheoryComput.2021, 17, 7187−7194
 [^4]:J. Phys. Chem. B2010,114,8191–8198
 [^5]:Nanoscale, 2020, 12, 18701
+[^6]:J.Chem.TheoryComput.2013, 9, 2887−2899

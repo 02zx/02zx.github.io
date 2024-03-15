@@ -218,9 +218,45 @@ PSDRange		10.0
 ```
 
 
+## 计算甲烷的吸附等温线
 
+ExternalPressure的单位是Pa
 
-## 计算甲烷的ideal gas Rosenbluth weight
+```bash
+SimulationType		MonteCarlo
+NumberOfCycles		25000
+NumberOfInitializationCycles 2000
+printEvery		1000
+
+Forcefield		local
+
+Framework		0
+FrameworkName		kerogens
+UnitCells		1 1 1
+HeliumVoidFraction 	0.12
+ExternalTemperature	338.0
+ExternalPressure	1e5 1e6 2e6 3e6 4e6 5e6 6e6 7e6 8e6 9e6 1e7 1.5e7 2e7 2.5e7 3e7 3.5e7 4e7 
+
+ComputeNumberOfMoleculesHistogram 	yes
+WriteNumberOfMoleculesHistogramEvery 	5000
+NumberOfMoleculesHistogramSize		1100
+NumberOfMoleculesRange			80
+
+ComputeEnergyHistogram			yes
+WriteEnergyHistogramEvery		5000
+EnergyHistogramSize			400
+EnergyHistogramLowerLimit		-110000
+EnergyHistogramUpperLimit		-20000
+
+Component 0 MoleculeName		ch4
+            IdealGasRosenbluthWeight    1.0
+	    MoleculeDefinition		local
+	    TranslationProbability	0.5
+            ReinsertionProbability	0.5
+            SwapProbability		1.0
+	    CreateNumberOfMolecules 	0
+```
+
 
 p=0-24MPa, T=338K
 

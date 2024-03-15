@@ -173,8 +173,6 @@ flexible
 ## 计算干酪根体系的helium void fraction
 输入文件内容如下(参考自手册example):
 
-由于unitcell体积比较大( $3^3$ nm $^3$ ), 模拟会比较耗时
-
 ---He_frac.in---
 ```bash
 SimulationType		MonteCarlo
@@ -194,6 +192,31 @@ Component 0 MoleculeName		helium
 	    WidomProbability		1.0
 	    CreateNumberOfMolecules 	0
 ```
+
+## 计算干酪根体系的孔径分布(PSD)
+
+输入文件内容如下(参考自手册example):
+```bash
+SimulationType		PSD
+NumberOfCycles		10000
+NumberOfInitializationCycles 0
+printEvery		10
+
+ChargeMethod	Ewald
+CutOff		12.0
+Forcefield		local
+EwaldPrecision	1e-6
+
+Framework		0
+FrameworkName		kerogens
+UnitCells		1 1 1
+ExternalTemperature	338.0
+PSDProbeDistance	Sigma
+WritePSDHistogramEvery	100
+PSDHistogramSize	1000
+PSDRange		10.0
+```
+
 
 
 

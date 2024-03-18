@@ -151,9 +151,9 @@ flexible
 ---ch4.def---
 ```bash
 # critical constants: Temperature [T], Pressure [Pa], and Acentric factor [-]. Created by AutoFF
-0.0
-0.0
-0.0
+190.564
+4599200.0
+0.01142
 #Number Of Atoms
 1
 #Number Of Group

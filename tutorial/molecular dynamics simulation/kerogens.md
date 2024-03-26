@@ -61,8 +61,6 @@ gmx grompp -f prod.mdp -c prod/eq2.gro -p topo.top -o prod/md
 sbatch run.sh
 ```
 
-# 含水量
-
 
 
 
@@ -259,6 +257,67 @@ Component 0 MoleculeName		ch4
 
 
 p=0-24MPa, T=338K
+
+
+
+# 含水量
+
+根据含水量估算应加水分子的数量:
+
+含水量大约为0.5%~6%, 此处取6%. 干酪根模型中含有8个干酪根分子, 每个分子的摩尔质量为3470g/mol, 应加水的数量为 8 * 3470 * 6%/18 = 92
+
+```bash
+mkdir water
+gmx solvate -cp prod/md.gro -cs -maxsol 92 -o water/conf.pdb
+```
+
+对topo.top文件做相应的修改
+```bash
+; Created by AuToFF
+; Most atomtypes are obatined from OPLS-AA/L forcefield and OPLS-AA/L was chosen as the primary forcefield.
+
+[ defaults ]
+; nbfunc        comb-rule       gen-pairs       fudgeLJ    fudgeQQ
+     1              2              yes            1       1
+
+#include "amber99sb.ff/ffnonbonded.itp"
+#include "IIC_ATP.itp"
+#include "IIC.itp"
+#include "amber99sb.ff/tip3p.itp"
+
+[ system ]
+IIC
+
+[ molecules ]
+; Molecule      nmols
+IIC        8; 1
+SOL        92
+```
+
+```bash
+cd water
+mkdir em eq 
+gmx grompp -f ../em.mdp -c conf.pdb -p ../topo.top -o em/em
+gmx mdrun -v -deffnm em/em
+```
+
+复制上一路径中的eq.mdp, 
+```bash
+cp ../eq.mdp ./
+```
+并做如下修改, 温度和压力调整为338.15K 200bar(20MPa), 模拟时间设为4ns
+```bash
+#---eq.mdp----
+nsteps = 2000000 ;4ns
+ref_t=338.15 ;K
+ref_p= 200 ;bar
+
+#----------
+
+gmx grompp -f eq.mdp -c em/em.gro -p ../topo.top -o eq/eq
+sbatch run.sh
+```
+
 
 [^1]:页岩气吸附与CO_2驱替及封存机理的分子模拟研究-周娟
 [^2]:https://www.materialsdesign.com/Publications/Ungerer2015

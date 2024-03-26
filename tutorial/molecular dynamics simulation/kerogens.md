@@ -266,6 +266,7 @@ p=0-24MPa, T=338K
 
 含水量大约为0.5%~6%, 此处取6%. 干酪根模型中含有8个干酪根分子, 每个分子的摩尔质量为3470g/mol, 应加水的数量为 8 * 3470 * 6%/18 = 92
 
+加入92个水
 ```bash
 mkdir water
 gmx solvate -cp prod/md.gro -cs -maxsol 92 -o water/conf.pdb
@@ -273,8 +274,7 @@ gmx solvate -cp prod/md.gro -cs -maxsol 92 -o water/conf.pdb
 
 对topo.top文件做相应的修改
 ```bash
-; Created by AuToFF
-; Most atomtypes are obatined from OPLS-AA/L forcefield and OPLS-AA/L was chosen as the primary forcefield.
+#---topo.top-------------------------------------------------------
 
 [ defaults ]
 ; nbfunc        comb-rule       gen-pairs       fudgeLJ    fudgeQQ
@@ -292,9 +292,10 @@ IIC
 ; Molecule      nmols
 IIC        8; 1
 SOL        92
-```
 
-```bash
+#-------------------------------------------------------------------
+
+#加水后进行能量最小化
 cd water
 mkdir em eq 
 gmx grompp -f ../em.mdp -c conf.pdb -p ../topo.top -o em/em
@@ -314,6 +315,7 @@ ref_p= 200 ;bar
 
 #----------
 
+#进行平衡模拟
 gmx grompp -f eq.mdp -c em/em.gro -p ../topo.top -o eq/eq
 sbatch run.sh
 ```

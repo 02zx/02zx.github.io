@@ -1,6 +1,9 @@
 
 The ionic conductivity $\sigma$ can be computed from:
 
+
+Starting from Green-Kubo relations[^1]
+
 $$
 \sigma = \frac{1}{6k_BVT} \lim_{t-> \infty} \frac{\rm d}{\rm dt} \bigg{\langle} \sum_{i=1}^{N}  \sum_{j=i}^{N}  q_iq_j\[ \vec{r}_i(t) -\vec{r}_i(0) \] \cdot \[ \vec{r}_j(t) - \vec{r}_j(0) \] \bigg{\rangle}
 $$
@@ -32,5 +35,5 @@ The second term $\sigma_{self}$ considers all the ion-ion interaction between th
 
 The third term $\sigma_{cross}$ considers all the ion-ion interaction between the different species, for example, $Na^+ - K^+$, $K^+ - Cl^-$ and $Na^+ - Cl^-$.
 
-
+[^1]:Understanding Molecular Simulation_ From Algorithms to Applications. pp 179
  

@@ -71,7 +71,7 @@ def conductivity(dfr):
             diagonal_sum[fr] = np.trace(upper_triangle[fr,:,:])
             self_sum[fr] = np.sum(upper_triangle[fr,:sep,:sep])+np.sum(upper_triangle[fr,sep:,sep:])-diagonal_sum[fr]
             cross_sum[fr]=np.sum(upper_triangle[fr,:sep,sep:])
-    return np.mean(diagonal_sum)/100, np.mean(self_sum)/100, -1*np.mean(cross_sum)/100
+    return np.mean(diagonal_sum)/100, np.mean(self_sum)/100, -2*np.mean(cross_sum)/100
 
 
 

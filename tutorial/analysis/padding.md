@@ -66,5 +66,22 @@ program read_pdb
     
 end program read_pdb
 
-
 ```
+
+## 编译
+
+```bash
+gfortran padding.f90 -o padding.x
+```
+
+## 使用
+
+```bash
+#获得文件(traj.pdb)中的最大分子数
+ N=`grep 'ATOM' traj.pdb |awk '{print $2}'|sort -g|tail -n 1`
+
+#补全文件
+./padding.x traj.pdb $N >out.lammpstrj
+```
+
+文件的输出格式为lammps, 其中vx 0为原始数据, vx 1为补全所添加的点

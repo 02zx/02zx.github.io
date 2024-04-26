@@ -293,7 +293,7 @@ print('Nmol^(1/3) A_vib/Nmol(kJ/mol), TSc/Nmol/1000(kJ/mol):', np.cbrt(N_mol), a
 上一步中已经求得 $A_{vib}, TS_c$ 了, 只需再加上 $U_0$ . 其数值可以通过能量最小化获得, 使用最速下降法计算即可 (gromacs中只有该方法支持约束); 最终带入 Eq.2 即可.
 
 ## 待补充内容
-Pauling's residual entropy, 1PT+AC, 2PT method
+Pauling's residual entropy, 1PT+AC, 2PT method, Vibrational modes in ASE.
 
 [^1]:Introduction to Modern Statistical Mechanics-pp:90-92
 [^2]:J. Chem. Phys. 150, 194111 (2019)

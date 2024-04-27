@@ -292,6 +292,102 @@ print('Nmol^(1/3) A_vib/Nmol(kJ/mol), TSc/Nmol/1000(kJ/mol):', np.cbrt(N_mol), a
 ### 计算总自由能( $A$ )
 上一步中已经求得 $A_{vib}, TS_c$ 了, 只需再加上 $U_0$ . 其数值可以通过能量最小化获得, 使用最速下降法计算即可 (gromacs中只有该方法支持约束); 最终带入 Eq.2 即可.
 
+
+## 附录：傅里叶变换
+
+## For a periodic function f(t) with periodicity of T.
+
+$$
+\begin{align*} 
+f(t) = A_{0}+\sum_{n=1}^{\infty} \[ A_n cos(2\pi n t /T) + B_n sin(2\pi n t /T) \] 
+\end{align*} 
+$$
+
+### Orthogonal functions
+
+$$
+\begin{align*} 
+& \{sin(0x),cos(0x),sin(x),cos(x),sin(2x),cos(2x),...,sin(nx),cos(nx)\} \\
+& \int_{-\pi}^{\pi} sin(nx) cos(mx) = 0 
+\end{align*} 
+$$
+
+For n $\ne$ m
+
+$$
+\begin{align*} 
+\int_{-\pi}^{\pi} cos(nx) cos(mx) = 0 \\
+\int_{-\pi}^{\pi} sin(nx) sin(mx) = 0
+\end{align*} 
+$$
+
+
+
+###  Fourier coefficient 
+
+$$
+\begin{align*} 
+x & =2\pi t /T \\
+f(x) & = A_{0}+\sum_{n=1}^{\infty} \[ A_n cos(nx) + B_n sin(nx) \]
+\end{align*} 
+$$
+
+### #1 For n = 0
+
+
+$$
+\begin{align*} 
+\int_{-\pi}^{\pi} f(x) cos(0x) dx & = \int_{-\pi}^{\pi} \[ A_{0}+\sum_{n=1}^{\infty} (A_n cos( n x ) + B_n sin( n x )) \] cos(0x) dx = \int_{-\pi}^{\pi}( A_{0} cos(0x) + 0 + 0 )dx = \int_{-\pi}^{\pi} A_{0} dx = A_{0}2\pi \\
+& \Rightarrow A_0 = (1/2\pi) \int_{-\pi}^{\pi} f(x)dx = (1/T) \int_{-T/2}^{T/2} f(t)dt
+\end{align*} 
+$$
+
+### #2 For n $\ge$ 1
+
+
+$$
+\begin{align*} 
+ \int_{-\pi}^{\pi} f(x) cos(nx) dx & = \int_{-\pi}^{\pi} \[ A_{0}+\sum_{n=1}^{\infty} (A_n cos( n x ) + B_n sin( n x )) \] cos(nx) dx = \int_{-\pi}^{\pi}( 0+ A_n cos( n x ) cos(nx) + 0 )dx = \int_{-\pi}^{\pi} A_n cos^2(nx) dx = A_n \pi \\
+& \Rightarrow A_n = (1/\pi) \int_{-\pi}^{\pi} f(x)cos(nx) dx = (2/T) \int_{-T/2}^{T/2} f(t) cos(2\pi n t /T) dt 
+\end{align*} 
+$$
+
+### #3 For n $\ge$ 1
+$$
+\begin{align*} 
+\int_{-\pi}^{\pi} f(x) sin(nx) dx & = \int_{-\pi}^{\pi} \[ A_{0}+\sum_{n=1}^{\infty} (A_n cos( n x ) + B_n sin( n x )) \] sin(nx) dx = \int_{-\pi}^{\pi}( 0+ 0+ B_n sin(nx) sin(nm) )dx = \int_{-\pi}^{\pi} B_n sin^2(nx) dx = B_n \pi \\
+& \Rightarrow B_n = (1/\pi) \int_{-\pi}^{\pi} f(x) sin(nx) dx= (2/T) \int_{-T/2}^{T/2} f(t) sin(2\pi n t /T) dt 
+\end{align*} 
+$$
+
+
+### Exponentials
+
+$$
+\begin{align*} 
+cos(x) & = (e^{ix} + e^{-ix})/2 \\
+sin(x) & = -(e^{ix} - e^{-ix})/2 \\
+f(t) & = A_{0}+\sum_{n=1}^{\infty} \[ A_n cos(2\pi n t /T) + B_n sin(2\pi n t /T) \] \Rightarrow f(t) = \sum_{n=-\infty}^{\infty} \[ (1/T) \int^{T}_{0} f(t) e^{-i2\pi nt/T} dt \] e^{i2\pi nt/T} \\
+\end{align*} 
+$$
+
+### Fourier transform F(n) 
+
+$$
+F(n) = \int^{T}_{0} f(t) e^{-i2\pi nt/T} dt
+$$
+
+### For a discrete function
+
+$$
+\begin{align*} 
+\{a_m \} & = \{a_0, a_1, a_2,..., a_{N-1}\} \\
+t & = m \times dt;~~ f(t) = \{a_m \};~~ T = N \times dt;~~ n = k/T ; \int^{T}_{0} dt \Rightarrow \sum^{N-1} _{m=0} \\
+F(k) & = \sum^{N-1} _{m=0} a_m e^{-2\pi i mk/N}~,k=0,1,2,...,N-1 \\
+\end{align*} 
+$$
+
+
 ## 待补充内容
 Pauling's residual entropy, 1PT+AC, 2PT method, Vibrational modes in ASE.
 

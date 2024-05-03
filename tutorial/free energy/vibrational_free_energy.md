@@ -260,14 +260,14 @@ with open('{}/water.vdos'.format(N_mol),'w') as f:
 N_f = 6*N_mol-6
 
 def F(freq, num,T,dv):
-    return np.sum(8.314*T*num*np.log(2*np.sinh(6.626*6.02*10*freq/2/8.314/T)))*dv
+    return np.sum(8.314*T*num*np.log(2*np.sinh(6.626*6.02*10*freq/2/8.314/T)))
 
 def norm(freq, num,N_mol):
     return (N_f)*num/np.sum(num)
 
 def F_norm(freq, num,N_mol,T,dv):
     nf=norm(freq,num,N_mol)
-    return round(np.sum(8.314*T*nf*np.log(2*np.sinh(6.626*6.02*10*freq/2/8.314/T)))*dv/N_mol/1000,7)
+    return round(np.sum(8.314*T*nf*np.log(2*np.sinh(6.626*6.02*10*freq/2/8.314/T)))/N_mol/1000,7)
 
 
 def E_norm(freq, num,N_mol,dv):
@@ -366,7 +366,7 @@ $$
 $$
 \begin{align*} 
 cos(x) & = (e^{ix} + e^{-ix})/2 \\
-sin(x) & = -(e^{ix} - e^{-ix})/2 \\
+sin(x) & = (e^{ix} - e^{-ix})/2i \\
 f(t) & = A_{0}+\sum_{n=1}^{\infty} \[ A_n cos(2\pi n t /T) + B_n sin(2\pi n t /T) \] \Rightarrow f(t) = \sum_{n=-\infty}^{\infty} \[ (1/T) \int^{T}_{0} f(t) e^{-i2\pi nt/T} dt \] e^{i2\pi nt/T} \\
 \end{align*} 
 $$

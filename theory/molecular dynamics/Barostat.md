@@ -1,4 +1,13 @@
 
+# Mechanics[^1]
+
+## The principle of least action
+
+
+## The Lagrangian for a system
+
+
+
 # The Clausius virial theorem
 
 $$
@@ -9,7 +18,7 @@ $$
    r_i \ddot{r}_i  & = \frac{\mathrm{d}}{\mathrm{d}t	} (r_i \dot{r}_i) - \dot{r}_i^2 \\
    \overbrace{m_i r_i \ddot{r}_i}^{F_i r_i} & = \frac{\mathrm{d}}{\mathrm{d}t	} (m_i r_i \dot{r}_i)  - m_i \dot{r}_i^2 \\
  \lim _{\tau \to \infty} \langle \sum^{N} _{i} F_i r_i \rangle _\tau & =  \underbrace{ \lim _{\tau \to \infty}  \langle \sum^{N} _{i} \frac{\mathrm{d}}{\mathrm{d}t	} (m_i r_i \dot{r}_i) \rangle _\tau  } -  \lim _{\tau \to \infty}  \langle \sum^{N} _{i} m_i  \dot{r}_i^2 \rangle _\tau \\
-  & {\lim _{\tau \to \infty} \sum^{N} _{i} \frac{m_i r_i(\tau) \dot{r}_i(\tau) -  m_i r_i(0) \dot{r}_i(0)}{\tau}} = 0 \\
+  & \lim _{\tau \to \infty} \int ^{\tau} _{0} \frac{1}{\tau}  \sum^{N} _{i} \frac{\mathrm{d}}{\mathrm{d}t	} (m_i r_i \dot{r}_i) \mathrm{d}t = {\lim _{\tau \to \infty} \sum^{N} _{i} \frac{m_i r_i(\tau) \dot{r}_i(\tau) -  m_i r_i(0) \dot{r}_i(0)}{\tau}} = 0 \\
   \underbrace{\lim _{\tau \to \infty} \langle \sum^{N} _{i} F_i r_i \rangle _\tau} _{\mathcal{V}} & = -  \underbrace{\lim _{\tau \to \infty}  \langle \sum^{N} _{i} m_i \dot{r}_i^2 \rangle _\tau} _{2E_k} \\
    \mathcal{V} = -2\Xi + \mathcal{V}^{ex} & = -2E_k \\
 \end{align*}  
@@ -29,7 +38,7 @@ $$
 $$ 
 
 
-# Berendsen method
+# Berendsen method[^2]
 
 分子内相互作用对压力的贡献可以忽略, 压力的改变可以转化为对分子间距离的放缩, 同时放缩盒子尺寸. 为此可将运动方程 
 
@@ -78,3 +87,56 @@ $$
 
 上式中 $\Delta t$ 是模拟步长.
 
+
+# Andersen method[^3]
+Lagrangian:
+
+$$
+\large
+\mathcal{L}(r^N, \dot{r}^N) = \frac{1}{2} m \sum^{N} _{i} \dot{r} _i^2 - \sum^{N} _{i} u(r _{ij})
+$$
+
+对体系定义分数坐标( $\rho_i = r_i / V^{1/3}$ ), 并引入放缩因子Q, 使得( $Q=V,\  r_i = Q^{1/3} \rho_i,\  \dot{r}_i = Q^{1/3} \dot{\rho}_i $)相应地, Lagrangian变为:
+
+$$
+\large
+\mathcal{L}(\rho^N, \dot{\rho}^N, Q, \dot{Q}) = \frac{1}{2} m Q^{2/3} \sum^{N} _{i} \dot{\rho} _i^2 - \sum^{N} _{i} u(Q^{1/3} \rho _{ij}) +  \overbrace{\frac{1}{2} M Q^2}^{\text{Kinetic term from volume change}} \underbrace{-\alpha Q } _{\text{potential term(pV) from volume change}}
+$$
+
+运动方程:
+
+$$
+\begin{align*} 
+\large
+\frac{\mathrm{d}r}{\mathrm{d}t}  = \frac{\mathrm{d} \rho(t)Q^{1/3}(t)}{\mathrm{d}t} & = \dot{\rho} Q^{1/3}  +   \frac{1}{3} \rho Q^{-2/3}  \frac{\mathrm{d}Q}{\mathrm{d}t} \\
+& = \dot{r} + \frac{1}{3} \frac{\mathrm{d}Q}{\mathrm{d}t} \frac{\rho Q^{1/3}}{Q} \\
+& = \dot{r} + \frac{1}{3} \frac{\mathrm{d}Q}{\mathrm{d}t} \frac{r}{Q} \\
+& = \dot{r} + \frac{1}{3} r \frac{\mathrm{dln}Q}{\mathrm{d}t} \\
+& = \dot{r} + \frac{1}{3} r \frac{\mathrm{dln}V}{\mathrm{d}t}
+ \end{align*}  
+$$
+
+$$
+\begin{align*} 
+\large
+\frac{\mathrm{d}r}{\mathrm{d}t}  = \frac{\mathrm{d} \rho(t)Q^{1/3}(t)}{\mathrm{d}t} & = \dot{\rho} Q^{1/3}  +   \frac{1}{3} \rho Q^{-2/3}  \frac{\mathrm{d}Q}{\mathrm{d}t} \\
+& = \dot{r} + \frac{1}{3} \frac{\mathrm{d}Q}{\mathrm{d}t} \frac{\rho Q^{1/3}}{Q} \\
+& = \dot{r} + \frac{1}{3} \frac{\mathrm{d}Q}{\mathrm{d}t} \frac{r}{Q} \\
+& = \dot{r} + \frac{1}{3} r \frac{\mathrm{dln}Q}{\mathrm{d}t} \\
+& = \dot{r} + \frac{1}{3} r \frac{\mathrm{dln}V}{\mathrm{d}t}
+ \end{align*}  
+$$
+
+
+
+
+
+
+# Parrinello-Rahman method[^4]
+
+
+
+[^1]: L.D. Landau, E.M. Lifshitz. Mechanics.
+[^2]: J. Chem. Phys. 81, 8, (1984).
+[^3]: J. Chem. Phys. 72, 2384 (1980).
+[^4]: 

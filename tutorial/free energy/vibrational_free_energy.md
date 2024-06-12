@@ -86,6 +86,7 @@ $$
 ## 速度自相关函数求算态密度
 
 除正则分析外还可以通过对质量权重的速度自相关函数(mass-weighted velocity autocorrelation function, 简写为mw-vacf)进行傅里叶变换来获得速度的态密度分布(VDOS)[^2], 在低温下其结果与正则分析基本吻合. 
+原理见:Dickey, J. M. and A. Paskin (1969). "Computer Simulation of the Lattice Dynamics of Solids." Physical Review 188(3): 1407-1418.
 
 $$
 g(\nu) = 2\beta \sum_{j=1}^N m_j \int dt \langle \vec{v}_j (\tau) \vec{v}_j (\tau + t) \rangle _\tau e^{-i2\pi \nu t} ~~~~~~~Eq.3

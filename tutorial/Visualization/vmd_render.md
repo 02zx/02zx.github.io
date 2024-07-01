@@ -1,3 +1,9 @@
+# 如何在VMD中保存当前视角
+```tcl
+set view [molinfo top get {center_matrix rotate_matrix scale_matrix global_matrix}]
+molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} $view
+```
+
 # 如何在VMD中添加字幕[^1]
 ```tcl
 color Display Background white

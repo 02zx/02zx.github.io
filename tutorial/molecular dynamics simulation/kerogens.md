@@ -321,6 +321,30 @@ sbatch run.sh
 ```
 
 
+# gromacs中的wall参数
+
+1. npt模拟可以配合两层wall使用，两层wall将分别施加在盒子z方向的边缘。加压后，wall将随盒子一并收缩，相当于模拟用wall加压的过程。
+2. 通常在建模时应确保所有分子都在盒子内(并且处于wall以内)，当有分子超出wall时，wall和分子的距离为0，相当于有无穷大的斥力(LJ势能趋于无穷)，进而造成模拟崩溃。这时可以将wall-r-linpot设为一非0数值，将超出wall后的受力改为常数，由此可以将分子拉回wall内部。应当注意，如果wall-r-linpot设置的太大，那么拉回分子的力会很小，以至于分子无法回到wall内。待分子全部回到wall内部后，应将wall-r-linpot再度设为0，避免再有分子超出wall。
+
+```bash
+---mdp---
+pbc                 = xy
+ewald_geometry      = 3dc
+nwall               = 2
+wall-atomtype       = C C
+wall_type           = 12-6
+wall-r-linpot       = 0 ;positive value for equilibration in NVT
+wall-ewald-zfac     = 3
+
+Pcoupl              =  berendsen
+Pcoupltype          =  semiisotropic
+refcoord-scaling    =  com
+tau_p               =  1
+compressibility     =  0  4.5e-5
+ref_p               =  1000  1000
+```
+
+
 [^1]:页岩气吸附与CO_2驱替及封存机理的分子模拟研究-周娟
 [^2]:https://www.materialsdesign.com/Publications/Ungerer2015
 [^3]:Wang, C.; Li, W.; Liao, K.; Wang, Z.; Wang, Y.; Gong, K. AuToFF Program, Vesrion 1.0. Hzwtech. Shanghai 2023, see https://cloud.hzwtech.com/web/product-service?id=36.

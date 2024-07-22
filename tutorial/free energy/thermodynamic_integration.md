@@ -41,6 +41,47 @@ $$
 
 以上公式在使用过程中应注意, 在选择积分路径时不应跨越相边界.
 
+### 5. Einstein Crystal Method
+
+Einstein Crystal Method专门用于计算固体的自由能( $A_{sol}$ ), 与Hamiltonian Integration类似, 其将其中一个状态选定为Einstein Crystal态. 该状态下, 每个粒子间无相互作用, 但每个粒子都被一个谐振势约束在晶格上, 此时晶体的自由能( $A_{Ein}$ )具有解析形式.
+由此可知, 当通过解析方式求得 $A_{Ein}$ 后, 进而可由Hamiltonian Integration求得 $A_{sol}$ . 其路径如下: 
+
+$$
+\Large
+\begin{align*}  
+ \underbrace{ A_{Ein} \stackrel{\Delta A_1}{\longrightarrow} A_{Ein}^{CM}  \stackrel{\Delta A_2}{\longrightarrow} A_{Ein,sol}^{CM} \stackrel{\Delta A_3}{\longrightarrow} A_{sol}^{CM} \stackrel{\Delta A_4}{\longrightarrow} A_{sol} }_{\Delta A}
+\end{align*}  
+$$
+
+其中, 与各项自由能相对应的状态为:  
+$A_{Ein}^{CM}$ : 固定体系质心的Einstein Crystal  
+$A_{Ein,sol}^{CM}$ : 固定体系质心的Einstein Crystal, 外加粒子间的实际相互作用  
+$A_{sol}^{CM}$ : 固定体系质心的固体  
+$A_{sol}$ : 真实的固体  
+因此, $A_{sol}$ 可表示为:  
+
+$$
+\Large
+\begin{align*}  
+A_{sol} = \Delta A + A_{Ein} = \Delta A_4 +\Delta A_3 +\Delta A_2 + \Delta A_1 + A_{Ein}
+\end{align*}  
+$$
+
+Einstein Crystal的Hamiltonian为:
+
+$$
+\Large
+\begin{align*}  
+H_{Ein} = \sum_{i} \frac{p_i ^2}{2m_i} +\sum_{i} k_i(r_i - r_i^0)^2
+\end{align*}  
+$$
+
+
+
+
+
+
+
 ## 水的自由能计算[^1]
 
   液态水自由能的绝对值可以通过Hamiltonian integration进行计算. 其中始末状态分别选为LJ流体以及水即可. 目前主流的水模型中均只有氧原子有LJ参数, 氢原子为点电荷. 因此只需要逐渐关闭水分子的静电作用, 即减小原子电荷, 便可实现从LJ流体到水的可逆变化. 该过程的自由能如下:
@@ -86,17 +127,17 @@ SPC/E水模型的参数如下:
 |  ----                | ----         | ----    |
 | 78.20                | 0.31656      | 0.4238  |
 
-1. Equilibration
+#### 1. Equilibration
    
    创建一个360个水分子的水盒子, 在225K 564bar下进行1ns的MD模拟, 将体系跑平衡. 
    
-2. Hamitonian Integration
+#### 2. Hamitonian Integration
    
    模拟流程如下: 在11个 $\lambda$ 下分别进行能量最小化, 平衡相以及产生相模拟. 随后使用SPC/E的原子电荷对产生相中的11段轨迹进行rerun, 计算静电势能, 最终积分求解自由能. 
    
    初始结构: 以步骤1中产生的结构作为初始结构 (注意:此处与[^1]中的操作不同, 文献中采用前一 $\lambda$ 下产生的结构作为后一 $\lambda$ 下的初始结构. 因为平衡态下的模拟结果不应依赖于初始结构, 所以这一差异对结果没有影响.)
  
-   拓扑文件: 以0.1为间隔从0到1产生11个 $\lambda$, 对水分子的原子电荷进行放缩( $q_H(\lambda) = \sqrt{\lambda} q_H $ ), 并写入拓扑文件中.
+   拓扑文件: 以0.1为间隔从0到1产生11个 $\lambda$, 对水分子的原子电荷进行放缩( $q_H(\lambda) = \sqrt{\lambda} q_H$ ), 并写入拓扑文件中.
 
    模拟参数: 模拟均在NVT系综下进行, 非键作用的cut-off和rlist均设为0.85, 长程静电作用通过PME方法计算, 水分子的键长键角均要进行约束.
 
@@ -114,6 +155,9 @@ SPC/E水模型的参数如下:
     print("Hello, World!");
 ```
 -->
+
+
+## 冰的自由能计算[^2]
 
 
 ## 参考文献

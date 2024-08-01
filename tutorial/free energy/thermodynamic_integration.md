@@ -96,7 +96,7 @@ Q_{Ein} =  P _{id} Z_1
 \end{align*}  
 $$
 
-若体系为单质体系, 则 $m_i = m;\ Z_1 = (2 \pi / \beta k )^{3N/2}$ . 自由能 $A_{Ein}$ 为:
+若体系为单质体系, 则 $m_i = m;\ Z_1 = (\pi / \beta k )^{3N/2}$ . 自由能 $A_{Ein}$ 为:
 
 $$
 \Large
@@ -212,7 +212,15 @@ $$
 
 
 ### Einstein Molecule Method
+Einstein Crystal方法中, 为了避免数值积分不连续的问题, 采用了固定质心的方法. 除此之外, 这一问题也可以通过固定一个粒子的位置(例如固定粒子1的位置, 粒子1依然可以自由转动)来解决, 即Einstein Molecule法. 
+类比Einstein Crystal可以写出其Hamiltonian, 由于粒子1的位置被固定在了平衡位置, 因此其势能项从2开始计算.
 
+$$
+\Large
+\begin{align*}  
+H _{Ein-mol} &= \sum _{i=1} \frac{\vec{p} _i ^2}{2m _i} +\sum _{i=2} k(\vec{r} _i - \vec{r} _i^0)^2 
+\end{align*}  
+$$
 
 
 

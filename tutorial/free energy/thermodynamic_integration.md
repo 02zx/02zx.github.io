@@ -304,5 +304,5 @@ SPC/E水模型的参数如下:
 
 ## 参考文献
 [^1]: J. Phys.: Condens. Matter 20 (2008) 153101
-[^2]:  Johnson J K, Zollweg J A and Gubbins K E 1993 Mol. Phys. 78-591.
+[^2]:  Johnson J K, Zollweg J A and Gubbins K E 1993 Mol. Phys. 78-591. The Lennard-Jones equation of state revisited.
 

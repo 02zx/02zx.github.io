@@ -34,5 +34,13 @@ ffmpeg -r 24 -start_number 0 -i pic.%05d.jpg -vframes 401 -crf 22 -c:v libx264 -
 
 -start_number 0 和 -vframes 401 控制了图片的范围，从0到400号用于视频合成
 
+# 几何变换
+```tcl
+set sel [atomselect top all]
+$sel move [transaxis z 90] #绕z转90度
+set vec {0 -1 0}
+$sel move [transvecinv $vec] #使体系中的一个向量平行于x轴
+
+```
 
 [^1]:http://sobereva.com/13

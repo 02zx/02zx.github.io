@@ -40,7 +40,7 @@ set sel [atomselect top all]
 $sel move [transaxis z 90] #绕z转90度
 set vec {0 -1 0}
 $sel move [transvecinv $vec] #使体系中的一个向量平行于x轴
-
+#注意VMD中c对应的是z轴方向的量
 ```
 
 [^1]:http://sobereva.com/13

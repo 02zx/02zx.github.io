@@ -71,4 +71,4 @@ ReaXFF:
 [^24]:Phase Diagram of H2O: Thermodynamic Functions of the Phase Transitions of High-Pressure Ices
 [^25]:Determining the phase diagram of water from direct coexistence simulations: The phase diagram of the TIP4P/2005 model revisited
 [^26]:Can simple models describe the phase diagram of water?
-[^26]:A potential model for the study of ices and amorphous water: TIP4P/Ice
+[^27]:A potential model for the study of ices and amorphous water: TIP4P/Ice

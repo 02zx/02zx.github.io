@@ -95,7 +95,8 @@ def pbc(coord,cell):
 
 def LJ_interactions_pbc(sigma, epsilon, coord, cell):
   N=len(coord)
-  rij, r=pbc(coord,cell)
+  #--use PBC--------------
+  rij, r=pbc(coord,cell) 
   attraction = (sigma/r)**6
   replusion = attraction**2
   potential = 4*epsilon*(replusion - attraction)
@@ -105,12 +106,14 @@ def LJ_interactions_pbc(sigma, epsilon, coord, cell):
 
 def md_vv_pbc(sigma,epsilon,mass,cell,coord,velocity,dt):
   N=len(coord)
+  #--use PBC--------------
   force=LJ_interactions_pbc(sigma, epsilon, coord)[1]
   #third law
   accelerate=np.zeros((N,3),dtype=float)
   for i in range(N): 
     accelerate[i,:]= np.sum(np.delete(force[i,:,:],i,axis=0),axis=0)/mass
   new_coord=coord + velocity*dt + 0.5*accelerate*dt**2
+  #--use PBC--------------
   new_potential, new_force=LJ_interactions_pbc(sigma, epsilon, new_coord)
   new_acc = np.zeros((N,3),dtype=float)
   for i in range(N): 

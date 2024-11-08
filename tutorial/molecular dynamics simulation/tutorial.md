@@ -44,17 +44,24 @@ def md_vv(sigma,epsilon,mass,coord,velocity,dt):
 
 
 ```python
+#initial configurations
 coord=np.array([[0,1,0],[0,2,0],[0,-0.5,1.8],[0,1,-1.2]])
 velocity=np.array([[0,0.001,0],[0,0.002,0],[0,0,0.001],[0,0,0]])
+
+#forcefield
 sigma=1.0
 epsilon=10000
+mass=20
+
+#integration 
 dt=0.0005
 mass=20
+
 kinetic=[]
 potential=[]
 N=len(coord)
 
-nsteps=8000
+
 traj=np.zeros((nsteps,N,3),dtype=float)
 for i in range(nsteps):
   coord, velocity, k,pe=md_vv(sigma,epsilon,mass,coord,velocity,dt)

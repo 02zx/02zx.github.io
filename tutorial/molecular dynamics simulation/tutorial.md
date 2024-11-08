@@ -1,6 +1,10 @@
 
-## NVE Simulation
+# NVE Simulation
 
+### Velocity Verlet
+$r(t+\delta t) = r(t) + v(t)\delta t + 0.5a(t) \delta t^2$
+
+$v(t+\delta t) = v(t) +  0.5(a(t) +a(t+\delta t))\delta t$
 
 ```python
 import matplotlib.pyplot as plt

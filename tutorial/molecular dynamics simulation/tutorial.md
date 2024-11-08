@@ -61,7 +61,7 @@ mass=20
 
 #integration 
 dt=0.0005
-mass=20
+
 
 kinetic=[]
 potential=[]

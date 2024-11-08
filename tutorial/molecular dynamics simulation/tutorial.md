@@ -1,8 +1,9 @@
 
-# NVE Simulation
+# Molecular Dynamics Simulation
 
-
-### Velocity Verlet
+## NVE Ensemble
+### Equation of Motions
+#### Velocity Verlet
 $r(t+\delta t) = r(t) + v(t)\delta t + 0.5a(t) \delta t^2$
 
 $v(t+\delta t) = v(t) +  0.5(a(t) +a(t+\delta t))\delta t$
@@ -84,7 +85,7 @@ plt.plot(traj[:-1,0,1],traj[:-1,0,2],'-')
 plt.plot(traj[:-1,3,1],traj[:-1,3,2],'-')
 ```
 
-### Periodic Boundary Condition
+#### Periodic Boundary Condition
 
 $\delta r= r_2 - r_1 = (\delta x, \delta y, \delta z)$
 
@@ -140,3 +141,25 @@ boxsize=np.array([
 ])
 
 ```
+
+#### Coulombic Interactions
+
+### Calculation of Properties
+#### Temperature
+#### Pressure
+#### Virial
+#### Diffusion
+
+
+
+## NVT Ensemble
+### Berendsen Thermostat
+### Velocity Rescale Thermostat
+### Anderson Thermostat
+### Nose-Hoover Thermostat
+
+## NPT Ensemble
+### Berendsen Barostat
+### Parrinello-Rahman Barostat
+### C-rescale Barostat
+

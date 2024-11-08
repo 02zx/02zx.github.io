@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import distance
 
-#molecular mechanics
+#molecular mechanics: Lennard-Jones potential
 def LJ_interactions(sigma, epsilon, coord):
   N=len(coord)
   rij=coord[:,np.newaxis,:]-coord[np.newaxis,:,:]
@@ -23,16 +23,21 @@ def LJ_interactions(sigma, epsilon, coord):
 def md_vv(sigma,epsilon,mass,coord,velocity,dt):
   N=len(coord)
   force=LJ_interactions(sigma, epsilon, coord)[1]
-  #third law
+
+  #Second law:F=ma----
   accelerate=np.zeros((N,3),dtype=float)
   for i in range(N): 
     accelerate[i,:]= np.sum(np.delete(force[i,:,:],i,axis=0),axis=0)/mass
+  
+  #update coordinates & velocity----
   new_coord=coord + velocity*dt + 0.5*accelerate*dt**2
   new_potential, new_force=LJ_interactions(sigma, epsilon, new_coord)
   new_acc = np.zeros((N,3),dtype=float)
   for i in range(N): 
     new_acc[i,:]= np.sum(np.delete(new_force[i,:,:],i,axis=0),axis=0)/mass
   new_vel = velocity + 0.5*(accelerate+new_acc)*dt
+
+  #Compute Kinetic energy-----------
   Ek=np.sum(mass*new_vel**2)/2
   return new_coord, new_vel,Ek,np.sum(np.triu(new_potential,k=1))
 ```

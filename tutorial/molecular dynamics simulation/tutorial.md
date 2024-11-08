@@ -86,9 +86,11 @@ plt.plot(traj[:-1,3,1],traj[:-1,3,2],'-')
 
 ### Periodic Boundary Condition
 
-$\delta r= r_2 - r_1$
+$\delta r= r_2 - r_1 = (\delta x, \delta y, \delta z)$
 
 $\delta r_{pbc} = \delta r - cell* round(\delta r/cell)$
+
+$cell$ 是一个 3 $\times$ 3 矩阵, 其非对角项均为0, 对角项分别为盒子的xyz边长。 目前该pbc程序只支持矩形盒子。
 
 ```python
 def pbc(coord,cell):

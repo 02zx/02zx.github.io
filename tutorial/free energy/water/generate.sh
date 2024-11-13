@@ -1,13 +1,13 @@
-#2024/11/13/23:00-ver
+#2024/11/13/24:00-ver
 #settings
 
-Pressure=("743" "4280")    #bar
-Temperature=("225" "443")  #K 
+Pressure=("none" "none" "none" "none" "none" "none")    #bar
+Temperature=("200" "250" "300" "350" "400" "450")  #K 
 
 N_site=4 #3 for 3 site model, 4 for 4 site model.
 water_model=tip4p #spce/tip4p/tip4p2005/tip4pice...
 
-create_system=no
+create_system=yes
 N=360
 density=1.05 #g/cm^3
 box_size=1.9
@@ -15,19 +15,19 @@ conf=conf
 top=topo
 state=liquid #solid or liquid
 
-Minimization=no
-Equilibration=no
+Minimization=yes
+Equilibration=yes
 
 #--Hamiltonian Integration---
 #
 Integration=no
 num_points=14 #number of point for integration
-Analyze=yes #compute integral
+Analyze=no #compute integral
 #----------------------------
 
 #--Thermodynamic Integration---
 #
-TI=no
+TI=yes
 #------------------------------ 
 
 
@@ -376,6 +376,7 @@ if [ "${Equilibration}" = "yes" ]; then
 
     cat<<EOF >>simulation.log
 #---Equilibration----
+Thermodynamic Integration: ${TI}
 Ensemble:$ensemble"
 Density: $density g/cm^3"
 Box Size: $box_size nm"
@@ -472,7 +473,7 @@ EOF
     cp mdp/eq.mdp mdp/md.mdp
     sed -i s"@^dt.*@dt=0.001@" mdp/md.mdp 
     sed -i s"@^nsteps.*@nsteps=5000000@" mdp/md.mdp 
-    cat<<EOF > mdp/md.mdp  
+    cat<<EOF >> mdp/md.mdp  
 ; GENERATE VELOCITIES FOR STARTUP RUN
  gen_vel                  = yes
  gen_temp=443
@@ -492,7 +493,7 @@ EOF
 
     else 
 
-        cat<<EOF > mdp/eq.mdp
+        cat<<EOF >> mdp/eq.mdp
 Pcoupl              =  c-rescale
 Pcoupltype          =  isotropic
 tau_p               =  1       
@@ -502,7 +503,7 @@ EOF
 
     fi
 
-    cat<<EOF > mdp/eq.mdp  
+    cat<<EOF >> mdp/eq.mdp  
 ; GENERATE VELOCITIES FOR STARTUP RUN
  gen_vel                  = yes
  gen_temp=443
@@ -516,7 +517,7 @@ lincs-iter               =  4
 lincs-order              =  6
 EOF
     if [ "${TI}" = "yes" ]; then 
-        sed -i s"@^nsteps.*@nsteps=5000000@" mdp/eq.mdp 
+        sed -i s"@^nsteps.*@nsteps=2500000@" mdp/eq.mdp 
     fi
     
     for i in `seq 0 1 $length`
@@ -646,8 +647,19 @@ EOF
 fi
 
 
+#Integration
+#"${state} ="Solid" &&  "${TI}" = "yes" 
+#if [ "${TI}" = "yes" ]; then
+
+
+
+#fi
+
+
+
 #Analyze
-if [ "${Analyze}" = "yes" ]; then
+
+if [ "${Analyze}" = "yes" ]; then #TI=no
 cat<<'EOF' >MBWR.py
 import numpy as np
 import sys
@@ -869,8 +881,10 @@ EOF
 fi
 
 #Thermodynamic Integration
+#"${Analyze} ="yes" &&  "${TI}" = "yes" 
 #if [ "${TI}" = "yes" ]; then
 
 
 
 #fi
+

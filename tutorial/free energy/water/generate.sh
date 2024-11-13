@@ -1,11 +1,11 @@
-
+#2024/11/13/23:00-ver
 #settings
 
-Pressure=("564" "4010")    #bar
+Pressure=("743" "4280")    #bar
 Temperature=("225" "443")  #K 
 
-N_site=3 #3 for 3 site model, 4 for 4 site model.
-water_model=spce #spce/tip4p/tip4p2005/tip4pice...
+N_site=4 #3 for 3 site model, 4 for 4 site model.
+water_model=tip4p #spce/tip4p/tip4p2005/tip4pice...
 
 create_system=no
 N=360
@@ -13,13 +13,22 @@ density=1.05 #g/cm^3
 box_size=1.9
 conf=conf
 top=topo
+state=liquid #solid or liquid
 
 Minimization=no
 Equilibration=no
+
+#--Hamiltonian Integration---
+#
 Integration=no
 num_points=14 #number of point for integration
-
 Analyze=yes #compute integral
+#----------------------------
+
+#--Thermodynamic Integration---
+#
+TI=no
+#------------------------------ 
 
 
 
@@ -27,31 +36,269 @@ Analyze=yes #compute integral
 #---------------------------------------------------------------------
 let length=${#Pressure[@]}-1
 ensemble=npt
+mkdir src
+
+cat<<EOF > topo.top
+Include forcefield parameters
+#include "amber99sb.ff/forcefield.itp"
+#include "./src/water_model.itp"
+
+[ system ]
+; Name
+ICE in water
+
+[ molecules ]
+; Compound        #mols
+EOF
+
 if [ "${water_model}" = "spce" ]; then
 
     charge=0.4238
     sigma=3.1656 #Angstrom
     epsilon=78.20 #K
+    cat<<EOF >./src/spce.template
+[ moleculetype ]
+; molname	nrexcl
+SOL		2
+
+[ atoms ]
+; id  at type     res nr  res name  at name  cg nr  charge    mass
+  1   OW_spc      1       SOL       OW       1      QO   15.99940
+  2   HW_spc      1       SOL       HW1      1      QH    1.00800
+  3   HW_spc      1       SOL       HW2      1      QH    1.00800
+
+#ifndef FLEXIBLE
+
+[ settles ]
+; OW	funct	doh	dhh
+1       1       0.1     0.16330
+
+[ exclusions ]
+1	2	3
+2	1	3
+3	1	2
+
+#else
+
+[ bonds ]
+; i     j       funct   length  force.c.
+1       2       1       0.1     345000  0.1     345000
+1       3       1       0.1     345000  0.1     345000
+
+[ angles ]
+; i     j       k       funct   angle   force.c.
+2       1       3       1       109.47  383     109.47  383
+
+#endif
+EOF
 
 elif [ "${water_model}" = "tip4p" ]; then
 
     charge=0.52
     sigma=3.154
     epsilon=78.0
+    cat<<EOF >./src/tip4p.template
+[ moleculetype ]
+; molname	nrexcl
+SOL		2
+
+[ atoms ]
+; id  at type     res nr  res name  at name  cg nr  charge    mass
+  1   OW_tip4p    1       SOL       OW       1       0        16.00000
+  2   HW_tip4p    1       SOL       HW1      1       QH      1.00800
+  3   HW_tip4p    1       SOL       HW2      1       QH      1.00800
+  4   MW          1       SOL       MW       1       QO      0.00000
+
+#ifndef FLEXIBLE
+
+[ settles ]
+; i	funct	doh	dhh
+1	1	0.09572	0.15139
+
+#else
+
+[ bonds ]
+; i     j       funct   length  force.c.
+1       2       1       0.09572 502416.0 0.09572        502416.0 
+1       3       1       0.09572 502416.0 0.09572        502416.0 
+        
+[ angles ]
+; i     j       k       funct   angle   force.c.
+2       1       3       1       104.52  628.02  104.52  628.02  
+
+#endif
+
+
+[ virtual_sites3 ]
+; Vsite from                    funct   a               b
+4       1       2       3       1       0.128012065     0.128012065
+
+
+[ exclusions ]
+1	2	3	4
+2	1	3	4
+3	1	2	4
+4	1	2	3
+
+
+; The position of the virtual site is computed as follows:
+;
+;		O
+;  	      
+;	    	V
+;	  
+;	H		H
+;
+; const = distance (OV) / [ cos (angle(VOH)) 	* distance (OH) ]
+;	  0.015 nm	/ [ cos (52.26 deg)	* 0.09572 nm	]
+;
+; Vsite pos x4 = x1 + a*(x2-x1) + b*(x3-x1)
+EOF
 
 elif [ "${water_model}" = "tip4p2005" ]; then
 
     charge=0.5564
     sigma=3.1589
     epsilon=93.2
+    cat<<EOF >./src/tip4p2005.template
+[ atomtypes ]
+; tip4p_2005
+
+  HW_2005     1       1.008   0.0000  A   0.00000e+00  0.00000e+00
+
+  OW_2005     8       16.00   0.0000  A   3.15890e-01  7.74898e-01
+
+  MW          0      0.0000   0.0000  D   0.00000e+00  0.00000e+00
+
+
+[ moleculetype ]
+; molname	nrexcl
+SOL		2
+
+[ atoms ]
+; id  at type     res nr  res name  at name  cg nr  charge    mass
+  1   OW_2005    1       SOL       OW       1       0        16.00000
+  2   HW_2005    1       SOL       HW1      2       QH      1.00800
+  3   HW_2005    1       SOL       HW2      3       QH    1.00800
+  4   MW          1       SOL       MW      4       QO     0.00000
+
+#ifndef FLEXIBLE
+
+[ settles ]
+; i	funct	doh	dhh
+1	1	0.09572	0.15139
+
+#else
+
+[ bonds ]
+; i     j       funct   length  force.c.
+1       2       1       0.09572 502416.0 0.09572        502416.0 
+1       3       1       0.09572 502416.0 0.09572        502416.0 
+        
+[ angles ]
+; i     j       k       funct   angle   force.c.
+2       1       3       1       104.52  628.02  104.52  628.02  
+
+#endif
+
+
+[ virtual_sites3 ]
+; Vsite from                    funct   a               b
+4       1       2       3       1       0.13193828     0.13193828
+
+
+[ exclusions ]
+1	2	3	4
+2	1	3	4
+3	1	2	4
+4	1	2	3
+
+
+; The position of the virtual site is computed as follows:
+;
+;		O
+;  	      
+;	    	V
+;	  
+;	H		H
+;
+; const = distance (OV) / [ cos (angle(VOH)) 	* distance (OH) ]
+;	  0.015 nm	/ [ cos (52.26 deg)	* 0.09572 nm	]
+;
+; Vsite pos x4 = x1 + a*(x2-x1) + b*(x3-x1)
+EOF
 
 elif [ "${water_model}" = "tip4pice" ]; then
 
     charge=0.5897
     sigma=3.1668
     epsilon=106.1
+    cat<<EOF >./src/tip4pice.template
+;
+; Note the strange order of atoms to make it faster in gromacs.
+[ atomtypes ]
+;name  bond_type    mass    charge   ptype          sigma      epsilon
+; tip4pice
+  H_ice     1       1.008   0.0000  A   0.00000e+00  0.00000e+00
+  O_ice     8       16.00   0.0000  A   3.16680e-01  8.82164e-01
+  M     0      0.0000   0.0000  D   0.00000e+00  0.00000e+00
+;
+[ moleculetype ]
+; molname	nrexcl
+SOL		2
+
+[ atoms ]
+; id	at type	res nr 	residu name	at name	cg nr	charge
+1       O_ice        1       SOL      OW     1       0.00
+2       H_ice        1       SOL      HW1     1       QH
+3       H_ice        1       SOL      HW2     1       QH
+4       M            1       SOL      MW      1       QO
+
+[ settles ]
+;i j funct doh  dhh
+1     1   0.09572 0.15139
+
+[ exclusions ]
+1	2	3	4
+2	1	3	4
+3	1	2	4
+4	1	2	3
+
+; The position of the virtual site is computed as follows:
+;
+;		O
+;  	      
+;	    	D
+;	  
+;	H		H
+;
+; const = distance (OD) / [ cos (angle(DOH)) 	* distance (OH) ]
+;	  0.01577 nm	/ [ cos (52.26 deg)	* 0.09572 nm	]
+
+; Vsite pos x4 = x1 + a*(x2-x1) + b*(x3-x1)
+
+[ virtual_sites3 ]
+; Vsite from			funct	a		b
+4	1	2	3	1	0.13458335      0.13458335
+EOF
 
 fi 
+
+qh=${charge} 
+qo=`echo "${qh}"|awk '{print -1*$qh*2}'`
+cat ./src/${water_model}.template >./src/${water_model}.itp
+sed -i s"@QO@$qo@" ./src/${water_model}.itp
+sed -i s"@QH@$qh@"g ./src/${water_model}.itp
+sed -i s"@water_model.itp@${water_model}.itp@" ${top}.top 
+if [ "`tail -n 1 topo.top |awk '{print $1}'`" = "SOL" ]; then
+
+    sed -i s"@^SOL.*@SOL ${N}@" ${top}.top
+
+else
+
+    echo "SOL $N" >> ${top}.top
+
+fi
 
 #generate simulation box
 if [ "${create_system}" = "yes" ]; then
@@ -66,18 +313,6 @@ ATOM      2  HW1 SOL     1       1.370   6.260   1.500  1.00  0.00
 ATOM      3  HW2 SOL     1       2.310   5.890   0.210  1.00  0.00
 EOF
 
-        cat<<EOF > topo.top
-Include forcefield parameters
-#include "amber99sb.ff/forcefield.itp"
-#include "amber99sb.ff/spce.itp"
-
-[ system ]
-; Name
-ICE in water
-
-[ molecules ]
-; Compound        #mols
-EOF
 
     fi
     
@@ -92,19 +327,6 @@ ATOM      3  HW2 SOL     1      16.430   8.310   2.740  1.00  0.00
 ATOM      4  MW  SOL     1      17.300   8.310   2.670  1.00  0.00
 EOF
 
-        cat<<EOF > topo.top
-Include forcefield parameters
-#include "amber99sb.ff/forcefield.itp"
-#include "amber99sb.ff/tip4p.itp"
-
-[ system ]
-; Name
-ICE in water
-
-[ molecules ]
-; Compound        #mols
-EOF
-
     fi
 
     if [ "${density}" != "no" ]; then 
@@ -113,14 +335,36 @@ EOF
 
     fi
     gmx insert-molecules -box ${box_size} -ci water.pdb -nmol ${N} -try 2000 -o ${conf}.pdb 
-    echo "SOL $N" >> ${top}.top
 fi
     
 #Minimization
 if [ "${Minimization}" = "yes" ]; then
     mkdir mdp
     mkdir em
-    cat /home/Share/XZ/mdp/em.mdp >mdp/em.mdp
+    cat<<EOF >mdp/em.mdp
+;define = -DFLEXIBLE
+integrator = steep
+nsteps = 10000
+emtol  = 10.0
+emstep = 0.01
+;
+nstxout   = 100
+nstlog    = 50
+nstenergy = 50
+;
+pbc = xyz
+cutoff-scheme            = Verlet
+coulombtype              = PME
+rcoulomb                 = 0.85
+vdwtype                  = Cut-off
+rvdw                     = 0.85
+rlist			         = 0.85
+;
+constraints              = hbonds
+;freezegrps          = MOL
+;freezedim           = Y Y Y 
+;
+EOF
     gmx grompp -f mdp/em.mdp -c ${conf}.pdb -p ${top} -o em/em
     gmx mdrun -v -deffnm em/em
     rm step*
@@ -129,7 +373,8 @@ fi
 
 #Equilibration
 if [ "${Equilibration}" = "yes" ]; then
-cat<<EOF >>simulation.log
+
+    cat<<EOF >>simulation.log
 #---Equilibration----
 Ensemble:$ensemble"
 Density: $density g/cm^3"
@@ -161,9 +406,121 @@ EOF
 
 
     
-   mkdir mdp
-   for i in `seq 0 1 $length`
-   do
+    mkdir mdp
+    cat<<EOF >mdp/eq.mdp
+;VARIOUS PREPROCESSING OPTIONS
+title                    = equilibration
+
+; RUN CONTROL PARAMETERS
+integrator               = md
+; Start time and timestep in ps
+tinit                    = 0
+dt                       = 0.002
+nsteps                   = 1000000
+; For exact run continuation or redoing part of a run
+init_step                = 0
+; mode for center of mass motion removal
+comm-mode                = linear
+; number of steps for center of mass motion removal
+nstcomm                  = 100
+; group(s) for center of mass motion removal
+comm-grps                = system
+
+; OUTPUT CONTROL OPTIONS
+; Output frequency for coords (x), velocities (v) and forces (f)
+nstxout                  = 5000
+nstvout                  = 5000
+nstfout                  = 5000
+; Output frequency for energies to log file and energy file
+nstlog                   = 10000 
+nstenergy                = 10000
+; Output frequency and precision for xtc file
+nstxtcout                = 10000
+xtc-precision            = 10000
+
+; NEIGHBORSEARCHING PARAMETERS
+; nblist update frequency
+nstlist                  = 1
+; ns algorithm (simple or grid)
+ns_type                  = grid
+; Periodic boundary conditions: xyz (default), no (vacuum)
+; or full (infinite systems only)
+pbc                      = xyz
+; nblist cut-off        
+rlist                    = 0.85 
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+; Method for doing electrostatics
+coulombtype              = pme
+rcoulomb                 = 0.85
+pme_order                = 4
+fourierspacing           = 0.1
+
+; Method for doing Van der Waals
+vdw-type                 = cut-off  
+rvdw                     = 0.85
+; Apply long range dispersion corrections for Energy and Pressure
+DispCorr                 = EnerPres 
+
+; OPTIONS FOR WEAK COUPLING ALGORITHMS
+; Temperature coupling  
+Tcoupl                   = v-rescale
+tau_t                    = 2
+ref_t=443
+tc-grps                  = system
+EOF
+    cp mdp/eq.mdp mdp/md.mdp
+    sed -i s"@^dt.*@dt=0.001@" mdp/md.mdp 
+    sed -i s"@^nsteps.*@nsteps=5000000@" mdp/md.mdp 
+    cat<<EOF > mdp/md.mdp  
+; GENERATE VELOCITIES FOR STARTUP RUN
+ gen_vel                  = yes
+ gen_temp=443
+ gen_seed                 = 50934891
+
+; OPTIONS FOR BONDS
+constraints              = hbonds ;all-angles
+; Type of constraint algorithm
+constraint-algorithm     = lincs
+lincs-iter               =  4
+lincs-order              =  6
+EOF
+
+    if [ "${density}" != "no" ]; then
+
+        ensemble=nvt
+
+    else 
+
+        cat<<EOF > mdp/eq.mdp
+Pcoupl              =  c-rescale
+Pcoupltype          =  isotropic
+tau_p               =  1       
+compressibility     =  4.5e-5 
+ref_p=4010
+EOF
+
+    fi
+
+    cat<<EOF > mdp/eq.mdp  
+; GENERATE VELOCITIES FOR STARTUP RUN
+ gen_vel                  = yes
+ gen_temp=443
+ gen_seed                 = 50934891
+
+; OPTIONS FOR BONDS
+constraints              = hbonds ;all-angles
+; Type of constraint algorithm
+constraint-algorithm     = lincs
+lincs-iter               =  4
+lincs-order              =  6
+EOF
+    if [ "${TI}" = "yes" ]; then 
+        sed -i s"@^nsteps.*@nsteps=5000000@" mdp/eq.mdp 
+    fi
+    
+    for i in `seq 0 1 $length`
+    do
 
     if [ "${density}" != "no" ]; then 
         Pressure[${i}]='none'
@@ -171,10 +528,17 @@ EOF
     fi
        mkdir ${Temperature[${i}]}_${Pressure[${i}]}
        mkdir ${Temperature[${i}]}_${Pressure[${i}]}/eq
-       cat /home/Share/XZ/mdp/equilibration/${ensemble}.mdp >mdp/eq.mdp
        sed -i s"@ref_t.*@ref_t=${Temperature[${i}]}@" mdp/eq.mdp
        sed -i s"@gen_temp.*@gen_temp=${Temperature[${i}]}@" mdp/eq.mdp
+
+    if [ "${state}" = "solid" ]; then 
+        sed -i s"@^Pcouple.*@Pcouple = Berendsen@" mdp/eq.mdp 
+        sed -i s"@^Pcoupltype.*@Pcoupltype = anisotropic@" mdp/eq.mdp 
+        sed -i s"@^compressibility.*@compressibility = 4.5e-5 4.5e-5 4.5e-5 0 0 0 @" mdp/eq.mdp 
+        sed -i s"@^ref_p.*@ref_p =${Pressure[${i}]} ${Pressure[${i}]} ${Pressure[${i}]} 0 0 0  @" mdp/eq.mdp 
+    else
        sed -i s"@ref_p.*@ref_p=${Pressure[${i}]}@" mdp/eq.mdp
+    fi
 
        gmx grompp -f mdp/eq.mdp -c em/em.gro -p ${top}.top -o ${Temperature[${i}]}_${Pressure[${i}]}/eq/eq  
    
@@ -187,7 +551,7 @@ fi
 
 #Integration
 if [ "${Integration}" = "yes" ]; then
-cat<<EOF >>simulation.log
+    cat<<EOF >>simulation.log
 #---Integration----
 Ensemble:$ensemble"
 Density: $density g/cm^3"
@@ -215,8 +579,7 @@ for i in range(num):
 #print("The integral from 0 to 1 is:", integral)
 EOF
 
-    python3 src/gauss_legendre.py $num_points >>src/landa_weight.dat
-    cat /home/Share/XZ/mdp/production/md.mdp >mdp/md.mdp
+    python3 src/gauss_legendre.py $num_points >src/landa_weight.dat
     gmx grompp -f mdp/md.mdp -c em/em.gro -p ${top}.top -o full.tpr
     for i in `seq 0 1 $length`
     do
@@ -229,13 +592,13 @@ EOF
         for f in `sed -n "2,$"p src/landa_weight.dat|awk '{print $1}'` #loop for sqrt(lambda)
         do
             mkdir ${Temperature[${i}]}_${Pressure[${i}]}/$f
-            qh=`echo "${charge} $f"|awk '{print $1*$2}'` 
+            qh=`echo "${charge} $f"|awk '{printf "%.5f", $1*$2}'` 
             qo=`echo "${qh}"|awk '{print -1*$qh*2}'`
             
-            cat /home/Share/XZ/ff/${water_model}.itp >${Temperature[${i}]}_${Pressure[${i}]}/$f/${water_model}.itp
+            cat ./src/${water_model}.template >${Temperature[${i}]}_${Pressure[${i}]}/$f/${water_model}.itp
             sed -i s"@QO@$qo@" ${Temperature[${i}]}_${Pressure[${i}]}/$f/${water_model}.itp
             sed -i s"@QH@$qh@"g ${Temperature[${i}]}_${Pressure[${i}]}/$f/${water_model}.itp
-            cat ${top}.top|sed s"@amber99sb.ff/${water_model}.itp@./${water_model}.itp@" >${Temperature[${i}]}_${Pressure[${i}]}/$f/${top}.top
+            cat ${top}.top|sed s"@src/${water_model}.itp@${water_model}.itp@" >${Temperature[${i}]}_${Pressure[${i}]}/$f/${top}.top
             
             #minimization
             mkdir ${Temperature[${i}]}_${Pressure[${i}]}/$f/em
@@ -467,11 +830,11 @@ result=MBWR(T_r, rho_r)
 #---ideal term----
 A_id =  np.log(360/(boxsz*10)**3) -1  #ln(rho*lambda**3) -1 
 #----------------
-print('A_res' , result[0]/T_r )
-print('A_id'  , A_id )
-print('A_LJ'  , result[0]/T_r+A_id )
-print('deltaA', deltaA )
-print('total',deltaA+result[0]/T_r+A_id )
+print('A_res:' , result[0]/T_r )
+print('A_id:'  , A_id )
+print('A_LJ:'  , result[0]/T_r+A_id )
+print('deltaA:', deltaA )
+print('total:',deltaA+result[0]/T_r+A_id )
     
 #T-K, N, V-nm^3, epsilon-kJ/mol, sigma-nm
 EOF
@@ -497,10 +860,17 @@ EOF
 
         done
         deltaA=`paste landa_coul_${Temperature[${i}]}_${Pressure[${i}]}.dat src/landa_weight.dat|sed -n "2,$"p |awk '{print $2*$5}'|awk '{total+=$1} END {print total}'` 
-        echo "#Free energy(NkT)---=${Temperature[${i}]} K, P=${Pressure[${i}]} bar---" >>result.dat
+        echo "#Free energy(NkT)---T=${Temperature[${i}]} K, P=${Pressure[${i}]} bar---" >>result.dat
         
         python3 MBWR.py ${Temperature[${i}]} ${N} ${box_size} ${epsilon} ${sigma} $deltaA >>result.dat
         echo "#------------------------------------------------">>result.dat
     done
 
 fi
+
+#Thermodynamic Integration
+#if [ "${TI}" = "yes" ]; then
+
+
+
+#fi

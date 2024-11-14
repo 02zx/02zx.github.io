@@ -7,20 +7,24 @@
 
 ### 1. Constant T (沿等温线积分)
 $$
-\frac{A(\rho_2,T)}{Nk_BT} = \frac{A(\rho_1,T)}{Nk_BT} + \int_{\rho_1}^{\rho_2} \frac{p(\rho)}{Nk_BT\rho^2} d\rho
+\frac{A(\rho_2,T)}{Nk_BT} = \frac{A(\rho_1,T)}{Nk_BT} + \int_{\rho_1}^{\rho_2} \frac{p(\rho)}{k_BT\rho^2} d\rho
+$$
+
+$$
+\frac{G(p_2,T)}{Nk_BT} = \frac{G(p_1,T)}{Nk_BT} + \int_{p_1}^{p_2} \frac{V(p)}{Nk_BT} dp
 $$
 
 ### 2. Constant p (沿等压线积分)
 $$
-\frac{G(T_2,p)}{Nk_BT_2} = \frac{G(T_1,p)}{Nk_BT_1} + \int_{T_1}^{T_2} \frac{H(T)}{Nk_BT^2} dT
+\frac{G(T_2,p)}{Nk_BT_2} = \frac{G(T_1,p)}{Nk_BT_1} - \int_{T_1}^{T_2} \frac{H(T)}{Nk_BT^2} dT
 $$
 
 ### 3. Constant V (沿等容线积分)
 $$
-\frac{A(T_2,V)}{Nk_BT_2} = \frac{A(T_1,V)}{Nk_BT_1} + \int_{T_1}^{T_2} \frac{U(T)}{Nk_BT^2} dT
+\frac{A(T_2,V)}{Nk_BT_2} = \frac{A(T_1,V)}{Nk_BT_1} - \int_{T_1}^{T_2} \frac{U(T)}{Nk_BT^2} dT
 $$
 
-### 4. Hamiltonian Integration
+## Hamiltonian Integration
 只要在两个状态(两个状态可以指LJ流体到水 或 甲烷分子到钠离子等)间找到任意一条可逆的路径, 对该路径进行积分即可求出两个状态间的自由能变化. 此处通过定义一个耦合参数 $\lambda$ , 将两个状态的哈密顿量关联起来. 
 
 $$

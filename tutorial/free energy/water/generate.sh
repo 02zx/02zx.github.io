@@ -1,4 +1,4 @@
-#2024/11/13/24:00-ver
+#2024/11/14/16:00-ver
 #settings
 
 Pressure=("none" "none" "none" "none" "none" "none")    #bar
@@ -7,7 +7,7 @@ Temperature=("200" "250" "300" "350" "400" "450")  #K
 N_site=4 #3 for 3 site model, 4 for 4 site model.
 water_model=tip4p #spce/tip4p/tip4p2005/tip4pice...
 
-create_system=yes
+create_system=no
 N=360
 density=1.05 #g/cm^3
 box_size=1.9
@@ -15,14 +15,14 @@ conf=conf
 top=topo
 state=liquid #solid or liquid
 
-Minimization=yes
-Equilibration=yes
+Minimization=no
+Equilibration=no
 
 #--Hamiltonian Integration---
 #
 Integration=no
 num_points=14 #number of point for integration
-Analyze=no #compute integral
+Analyze=yes #compute integral
 #----------------------------
 
 #--Thermodynamic Integration---
@@ -659,7 +659,7 @@ fi
 
 #Analyze
 
-if [ "${Analyze}" = "yes" ]; then #TI=no
+if [ "${Analyze}" = "yes" ] && [ "${TI}" = "no" ]; then #TI=no
 cat<<'EOF' >MBWR.py
 import numpy as np
 import sys
@@ -882,9 +882,27 @@ fi
 
 #Thermodynamic Integration
 #"${Analyze} ="yes" &&  "${TI}" = "yes" 
-#if [ "${TI}" = "yes" ]; then
+if [ "${Analyze}" = "yes" ] && [ "${TI}" = "yes" ]; then #TI=no
+    if [ "${density}" != "no" ]; then    
+        echo "#Temperature(K) Potential(kJ/mol) Potential(NkT)" >>results.dat
+    else
+        echo "#Temperature(K) Pressure(bar) Enthalpy(kJ/mol) pV(kJ/mol) Enthalpy(NkT) pV(NkT)" >>results.dat
+    fi
 
+    for i in `seq 0 1 $length`
+    do
+        potential=`echo -e "Potential\n0"| gmx energy -f ${Temperature[${i}]}_${Pressure[${i}]}/eq/eq.edr -b 1000 -o ${Temperature[${i}]}_${Pressure[${i}]}/eq/pe.xvg|grep Potential|awk '{print $2/'${N}'}'` 
+        if [ "${density}" != "no" ]; then 
+    
+            volume=`echo "${N} ${density}"|awk '{printf "%.3f" ,$1*18/602/$2}'`    
+            echo "${Temperature[${i}]}  $potential"|awk '{print $1, $2, $2*1000/8.314/$1}' >>results.dat
 
-
-#fi
+        else
+            volume=`echo -e "Volume\n0"| gmx energy -f ${Temperature[${i}]}_${Pressure[${i}]}/eq/eq.edr -b 1000 -o ${Temperature[${i}]}_${Pressure[${i}]}/eq/volume.xvg|grep Volume|awk '{print $2/'${N}'}'`
+            pv=`echo "${volume} ${Pressure[${i}]} "|awk '{print ($2*$3)*1000000/6.02 }'`
+            enthalpy=`echo "${potential} ${volume} ${Pressure[${i}]} "|awk '{print $1 + ($2*$3)*1000000/6.02 }'`
+            echo "${Temperature[${i}]} $enthalpy ${pv} ${Pressure[${i}]}"|awk '{print $1, $4, $2, $3, $2*1000/8.314/$1, $3*1000/8.314/$1}' >>results.dat
+        fi
+    done
+fi
 

@@ -7,7 +7,7 @@
 
 ### 1. Constant T (沿等温线积分)
 $$
-\frac{A(\rho_2,T)}{Nk_BT} = \frac{A(\rho_1,T)}{Nk_BT} + \int_{\rho_1}^{\rho_2} \frac{p(\rho)}{k_BT\rho^2} d\rho
+\frac{A(V_2,T)}{Nk_BT} = \frac{A(V_1,T)}{Nk_BT} - \int_{V_1}^{V_2} \frac{p(V)}{Nk_BT} dV
 $$
 
 $$
@@ -233,7 +233,7 @@ $$
   液态水自由能的绝对值可以通过Hamiltonian integration进行计算. 其中始末状态分别选为LJ流体以及水即可. 目前主流的水模型中均只有氧原子有LJ参数, 氢原子为点电荷. 因此只需要逐渐关闭水分子的静电作用, 即减小原子电荷, 便可实现从LJ流体到水的可逆变化. 该过程的自由能如下:
 
 $$
-U(\lambda) = \lambda U_{TIP4P} + (1-\lambda) U_{LJ} , ~\lambda = 0\sim1
+U(\lambda) = \lambda U_{water} + (1-\lambda) U_{LJ} , ~\lambda = 0\sim1
 $$
 
 $$

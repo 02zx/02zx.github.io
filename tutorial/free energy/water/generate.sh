@@ -64,8 +64,8 @@ SOL		2
 [ atoms ]
 ; id  at type     res nr  res name  at name  cg nr  charge    mass
   1   OW_spc      1       SOL       OW       1      QO   15.99940
-  2   HW_spc      1       SOL       HW1      1      QH    1.00800
-  3   HW_spc      1       SOL       HW2      1      QH    1.00800
+  2   HW_spc      1       SOL       HW1      2      QH    1.00800
+  3   HW_spc      1       SOL       HW2      3      QH    1.00800
 
 #ifndef FLEXIBLE
 
@@ -105,9 +105,9 @@ SOL		2
 [ atoms ]
 ; id  at type     res nr  res name  at name  cg nr  charge    mass
   1   OW_tip4p    1       SOL       OW       1       0        16.00000
-  2   HW_tip4p    1       SOL       HW1      1       QH      1.00800
-  3   HW_tip4p    1       SOL       HW2      1       QH      1.00800
-  4   MW          1       SOL       MW       1       QO      0.00000
+  2   HW_tip4p    1       SOL       HW1      2       QH      1.00800
+  3   HW_tip4p    1       SOL       HW2      3       QH      1.00800
+  4   MW          1       SOL       MW       4       QO      0.00000
 
 #ifndef FLEXIBLE
 
@@ -249,10 +249,10 @@ SOL		2
 
 [ atoms ]
 ; id	at type	res nr 	residu name	at name	cg nr	charge
-1       O_ice        1       SOL      OW     1       0.00
-2       H_ice        1       SOL      HW1     1       QH
-3       H_ice        1       SOL      HW2     1       QH
-4       M            1       SOL      MW      1       QO
+1       O_ice        1       SOL      OW      1       0.00
+2       H_ice        1       SOL      HW1     2       QH
+3       H_ice        1       SOL      HW2     3       QH
+4       M            1       SOL      MW      4       QO
 
 [ settles ]
 ;i j funct doh  dhh

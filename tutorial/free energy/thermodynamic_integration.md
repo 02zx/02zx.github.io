@@ -48,13 +48,13 @@ $$
 对于Einstein Crystal to Einstein Crystal+solid：
 
 $$
-\frac{\Delta A(N,V,T,\lambda=1)}{NkT} = \int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{sol}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
+\frac{\Delta A(N,V,T,\lambda)}{NkT} = \int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{sol}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
 $$
 
 对于 Einstein Crystal+solid to solid：
 
 $$
-\frac{\Delta A(N,V,T,\lambda=1)}{NkT} = -\int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{spring}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
+\frac{\Delta A(N,V,T,\lambda)}{NkT} = -\int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{spring}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
 $$
 
 

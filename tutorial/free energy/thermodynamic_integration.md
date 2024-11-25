@@ -45,6 +45,20 @@ $$
 
 其中q为粒子的配分函数, 以上公式在使用过程中应注意, 在选择积分路径时不应跨越相边界.
 
+对于Einstein Crystal to Einstein Crystal+solid：
+
+$$
+\frac{\Delta A(N,V,T,\lambda=1)}{NkT} = \int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{sol}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
+$$
+
+对于 Einstein Crystal+solid to solid：
+
+$$
+\frac{\Delta A(N,V,T,\lambda=1)}{NkT} = -\int_{\lambda=0}^{\lambda=1}  \Big{\langle} \frac{U_{spring}}{NkT}  \Big{\rangle}_{N,V,T,\lambda} d\lambda
+$$
+
+
+
 ## Einstein Crystal Method
 
 Einstein Crystal Method专门用于计算固体的自由能( $A_{sol}$ ), 与Hamiltonian Integration类似, 其将其中一个状态选定为Einstein Crystal. 该状态下, 每个粒子间无相互作用, 但每个粒子都被一个谐振势约束在晶格上, 此时晶体的自由能( $A_{Ein}$ )具有解析形式.

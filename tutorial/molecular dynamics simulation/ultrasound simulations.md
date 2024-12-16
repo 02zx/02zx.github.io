@@ -11,7 +11,8 @@ $$
 其中 $p(t)$ 是t时刻的压力， $p_0$ 是无超声时的参考压力， $A$ 是压力的振幅， $T$ 是压力振动周期 
 # 使用方法：
 
-从官网下载gromacs-2023.5并解压。将coupling.cpp复制到gromacs-2023.5/src/gromacs/mdlib/coupling.cpp之后进行编译即可。
+从官网下载gromacs-2023.5并解压。将[coupling.cpp][https://github.com/02zx/02zx.github.io/blob/main/tutorial/molecular%20dynamics%20simulation/coupling.cpp]复制到gromacs-2023.5/src/gromacs/mdlib/coupling.cpp之后进行编译即可。
+
 
 mdp设置：mdp中的参数与以上公式相对应，其中 $T$ 是以步数的形式确定的，例如 $T=500000$ 时， 在2fs步长下，振动周期即为 500000*2fs = 1ns.
 ```

@@ -1,7 +1,7 @@
 ## 模拟超声状态
 
 ### 源代码修改记录：
-本代码对gromacs2023.5版本进行修改，将Berendsen的半各向异性控压(semiisotropic)改为了各向同性控压(isotropic)+超声波(压力的正弦变化)。
+本代码基于gromacs2023.5版本进行修改，将Berendsen的半各向异性控压(semiisotropic)改为了各向同性控压(isotropic)+超声波(压力的正弦变化)。
 
 压力变化遵循以下公式：
 

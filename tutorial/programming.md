@@ -11,7 +11,11 @@
 module purge
 source /public/software/compiler/intel/2024.0.1/setvars.sh
 module add apps/python/3.8.15/python-3.8.15 compiler/gcc/11.3.0 compiler/cmake/3.25.1 compiler/nvhpc/23.7
+
+
 编译安装：
+
+
 mkdir build && cd build
 
 

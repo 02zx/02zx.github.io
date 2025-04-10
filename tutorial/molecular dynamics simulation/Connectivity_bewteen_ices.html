@@ -95,7 +95,7 @@
       <p style="text-align: left; font-size: 15px; color: black;">[20] Del Rosso, Leonardo, et al. "Cubic ice Ic without stacking defects obtained from ice XVII." Nature materials 19.6 (2020): 663-668.</p>
       <p style="text-align: left; font-size: 15px; color: black;">[21] Salzmann, Christoph G., Erwin Mayer, and Andreas Hallbrucker. "Effect of heating rate and pressure on the crystallization kinetics of high-density amorphous ice on isobaric heating between 0.2 and 1.9 GPa." Physical Chemistry Chemical Physics 6.22 (2004): 5156-5165.</p>
       <p style="text-align: left; font-size: 15px; color: black;">[22] Falenty, Andrzej, Thomas C. Hansen, and Werner F. Kuhs. "Formation and properties of ice XVI obtained by emptying a type sII clathrate hydrate." Nature 516.7530 (2014): 231-233.</p>
-
+      <p style="text-align: left; font-size: 15px; color: black;">[23] Lin, Chuanlong, et al. "Venture into water’s no man’s land: Structural transformations of solid H 2 O under rapid compression and decompression." Physical Review Letters 121.22 (2018): 225703.</p>
         <!-- Add more paragraphs or content as needed -->
     </div>
 
@@ -212,8 +212,8 @@
       "key": "6",
       "attributes": {
         "label": "V",
-        "x": 146.66599,
-        "y": -119.03284,
+        "x": 127.461945,
+        "y": -131.34312,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -232,8 +232,8 @@
       "key": "8",
       "attributes": {
         "label": "VII",
-        "x": 7.8091297,
-        "y": -78.04871,
+        "x": -2.0390968,
+        "y": -80.01836,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -242,8 +242,8 @@
       "key": "9",
       "attributes": {
         "label": "VIII",
-        "x": -35.049614,
-        "y": -26.596024,
+        "x": -54.746063,
+        "y": -23.149155,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -262,8 +262,8 @@
       "key": "11",
       "attributes": {
         "label": "X",
-        "x": -37.08927,
-        "y": 24.671036,
+        "x": -4.59013,
+        "y": -0.93434143,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -342,8 +342,8 @@
       "key": "19",
       "attributes": {
         "label": "XVIII",
-        "x": -104.97652,
-        "y": 22.628738,
+        "x": -5.0170364,
+        "y": 43.310028,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -1054,7 +1054,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[13]",
+        "REF": "[13, 23]",
         "reference": "null",
         "source name": "VI",
         "target name": "II"
@@ -1137,10 +1137,74 @@
         "source name": "XVI",
         "target name": "Isd"
       }
+    },
+    {
+      "key": "65",
+      "source": "7",
+      "target": "8",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[23]",
+        "reference": "null",
+        "source name": "VI",
+        "target name": "VII"
+      }
+    },
+    {
+      "key": "66",
+      "source": "9",
+      "target": "7",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[23]",
+        "reference": "null",
+        "source name": "VIII",
+        "target name": "VI"
+      }
+    },
+    {
+      "key": "67",
+      "source": "7",
+      "target": "9",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[23]",
+        "reference": "null",
+        "source name": "VI",
+        "target name": "VIII"
+      }
+    },
+    {
+      "key": "68",
+      "source": "10",
+      "target": "7",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[23]",
+        "reference": "null",
+        "source name": "XI",
+        "target name": "VI"
+      }
+    },
+    {
+      "key": "69",
+      "source": "8",
+      "target": "11",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[18]",
+        "reference": "null",
+        "source name": "VII",
+        "target name": "X"
+      }
     }
   ]
-        };
-
+ }
         // --- Data Preprocessing ---
         const nodes = graphData.nodes;
         const edges = graphData.edges;

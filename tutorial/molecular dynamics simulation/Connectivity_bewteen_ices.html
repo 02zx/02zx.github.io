@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D3 Directed Graph - Labels on Top</title>
+    <title>D3 Directed Graph - Text Below</title>
     <style>
         /* Styles remain largely the same */
         body {
             font-family: sans-serif;
             margin: 0;
-            overflow: hidden;
+            /* removed overflow: hidden; to allow scrolling if content exceeds viewport */
         }
         svg {
-            display: block;
+            display: block; /* Make SVG a block element */
             border: 1px solid lightgray;
             cursor: default;
+            margin: 0 auto; /* Center SVG horizontally if width is less than window */
         }
         .node circle {
             stroke: #0c01019a;
@@ -50,16 +51,60 @@
              transition: opacity 0.3s ease-in-out;
         }
 
+        /* Style for the text container below the SVG */
+        #text-below-svg {
+            padding: 20px; /* Add some space around the text */
+            text-align: center; /* Center the text */
+            border-top: 1px solid lightgray; /* Optional line separator */
+            margin-top: 10px; /* Space between SVG and text */
+        }
+
     </style>
 </head>
 <body>
+    <!-- SVG Container -->
     <svg id="graph-container"></svg>
+
+    <!-- Text Container Below SVG -->
+    <div id="text-below-svg">
+      <p style="text-align: left; font-size: 18px; color: black;">Color code: </p>
+      <p style="text-align: left; font-size: 18px; color: #389fd6;">Ice that can nucleate from water </p>
+      <p style="text-align: left; font-size: 18px; color: #6769e3;">Ice that cannot nucleate from water </p>
+      <p style="text-align: left; font-size: 18px; color: #a2c4a2;">Amorphous ice </p>
+      <p style="text-align: left; font-size: 18px; color: #ffc800;">Clathrate hydrate </p>
+      <p style="text-align: left; font-size: 18px; color: black;">Reference:</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[1] Del Rosso, Leonardo, Milva Celli, and Lorenzo Ulivi. "New porous water ice metastable at atmospheric pressure obtained by emptying a hydrogen-filled ice." Nature communications 7.1 (2016): 13394.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[2] Durham, W. B., et al. "Water ice phases II, III, and V: Plastic deformation and phase relationships." Journal of Geophysical Research: Solid Earth 93.B9 (1988): 10191-10208. </p>
+      <p style="text-align: left; font-size: 15px; color: black;">[3] Kawada, Shuji. "Dielectric dispersion and phase transition of KOH doped ice." Journal of the Physical Society of Japan 32.5 (1972): 1442-1442.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[4] Nishibata, K., and E. Whalley. "Thermal effects of the transformation ice III–IX." The Journal of Chemical Physics 60.8 (1974): 3189-3194.</p> 
+      <p style="text-align: left; font-size: 15px; color: black;">[5] Klotz, S., et al. "Recrystallisation of HDA ice under pressure by in-situ neutron diffraction to 3.9 GPa." Zeitschrift für Kristallographie-Crystalline Materials 218.2 (2003): 117-122.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[6] Salzmann, Christoph G., et al. "The preparation and structures of hydrogen ordered phases of ice." Science 311.5768 (2006): 1758-1761.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[7] Salzmann, Christoph G., et al. "Ice XV: a new thermodynamically stable phase of ice." Physical review letters 103.10 (2009): 105701.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[8] Gasser, Tobias M., et al. "Structural characterization of ice XIX as the second polymorph related to ice VI." Nature communications 12.1 (2021): 1128.</p>
+      <p style="text-align: left; font-size: 15px; color: rgb(107, 106, 106);">[9] Tulk, Chris A., et al. "Absence of amorphous forms when ice is compressed at low temperature." Nature 569.7757 (2019): 542-545.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[10] Wang, Yu, et al. "Kinetic boundaries and phase transformations of ice i at high pressure." The Journal of Chemical Physics 148.4 (2018).</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[11] Kohl, Ingrid, Erwin Mayer, and Andreas Hallbrucker. "Thermal properties of metastable ice XII." The Journal of Physical Chemistry B 104.51 (2000): 12102-12104.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[12] Energies of the phases of ice at low temperature and pressure relative to ice lh</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[13] Handa, Y. Paul, D. D. Klug, and Edward Whalley. "Energies of the phases of ice at low temperature and pressure relative to ice Ih." Canadian journal of chemistry 66.4 (1988): 919-924.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[14] Lin, Chuanlong, et al. "Temperature-dependent kinetic pathways featuring distinctive thermal-activation mechanisms in structural evolution of ice VII." Proceedings of the National Academy of Sciences 117.27 (2020): 15437-15442.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[15] Millot, Marius, et al. "Nanosecond X-ray diffraction of shock-compressed superionic water ice." Nature 569.7755 (2019): 251-255.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[16] Hemley, R. J., L. C. Chen, and H. K. Mao. "New transformations between crystalline and amorphous ice." Nature 338.6217 (1989): 638-640.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[17] Tajima, Yoshimitsu, Takasuke Matsuo, and Hiroshi Suga. "Calorimetric study of phase transition in hexagonal ice doped with alkali hydroxides." Journal of Physics and Chemistry of Solids 45.11-12 (1984): 1135-1144.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[18] Song, M., et al. "Infrared investigation on ice VIII and the phase diagram of dense ices." Physical Review B 68.1 (2003): 014106.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[19] Komatsu, Kazuki, et al. "Ice Ic without stacking disorder by evacuating hydrogen from hydrogen hydrate." Nature communications 11.1 (2020): 464.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[20] Del Rosso, Leonardo, et al. "Cubic ice Ic without stacking defects obtained from ice XVII." Nature materials 19.6 (2020): 663-668.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[21] Salzmann, Christoph G., Erwin Mayer, and Andreas Hallbrucker. "Effect of heating rate and pressure on the crystallization kinetics of high-density amorphous ice on isobaric heating between 0.2 and 1.9 GPa." Physical Chemistry Chemical Physics 6.22 (2004): 5156-5165.</p>
+      <p style="text-align: left; font-size: 15px; color: black;">[22] Falenty, Andrzej, Thomas C. Hansen, and Werner F. Kuhs. "Formation and properties of ice XVI obtained by emptying a type sII clathrate hydrate." Nature 516.7530 (2014): 231-233.</p>
+
+        <!-- Add more paragraphs or content as needed -->
+    </div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         // --- Configuration ---
         const width = window.innerWidth;
-        const height = window.innerHeight;
+        // Define SVG height (e.g., 85% of window height) to leave space for text
+        const svgHeight = window.innerHeight * 0.85;
         const arrowheadSize = 5;
         const nodeRadiusMargin = 0.5;
         const activeOpacity = 1.0;
@@ -71,8 +116,10 @@
         // --- SVG Setup ---
         const svg = d3.select("#graph-container")
             .attr("width", width)
-            .attr("height", height)
-            .attr("viewBox", [-width / 2, -height / 2, width, height]);
+            // Set the calculated height for the SVG element
+            .attr("height", svgHeight)
+            // Adjust viewBox height and vertical center based on svgHeight
+            .attr("viewBox", [-width / 2, -svgHeight / 2, width, svgHeight]);
 
         const mainG = svg.append("g");
 
@@ -100,13 +147,13 @@
 
         // --- Load Data ---
         const graphData = { /* Your JSON data */
-            "nodes": [
+          "nodes": [
     {
       "key": "0",
       "attributes": {
         "label": "Ih",
-        "x": 5.3973656,
-        "y": -273.35703,
+        "x": 11.306301,
+        "y": -306.3486,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -115,8 +162,8 @@
       "key": "1",
       "attributes": {
         "label": "Ic",
-        "x": -46.767616,
-        "y": -227.42131,
+        "x": -131.95476,
+        "y": -237.76198,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -125,8 +172,8 @@
       "key": "2",
       "attributes": {
         "label": "Isd",
-        "x": 4.909236,
-        "y": -198.13437,
+        "x": -21.18856,
+        "y": -207.98259,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -135,8 +182,8 @@
       "key": "3",
       "attributes": {
         "label": "II",
-        "x": 31.36678,
-        "y": -217.24918,
+        "x": 35.30607,
+        "y": -242.36215,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -145,8 +192,8 @@
       "key": "4",
       "attributes": {
         "label": "III",
-        "x": 73.98561,
-        "y": -206.66873,
+        "x": 118.795044,
+        "y": -206.66872,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -155,8 +202,8 @@
       "key": "5",
       "attributes": {
         "label": "IV",
-        "x": -30.77436,
-        "y": -105.79443,
+        "x": -39.637764,
+        "y": -78.21939,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -165,8 +212,8 @@
       "key": "6",
       "attributes": {
         "label": "V",
-        "x": 89.29036,
-        "y": -157.24414,
+        "x": 146.66599,
+        "y": -119.03284,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -175,8 +222,8 @@
       "key": "7",
       "attributes": {
         "label": "VI",
-        "x": 57.265152,
-        "y": -135.13184,
+        "x": 88.77947,
+        "y": -99.2053,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -185,8 +232,8 @@
       "key": "8",
       "attributes": {
         "label": "VII",
-        "x": -0.13813019,
-        "y": -117.64861,
+        "x": 7.8091297,
+        "y": -78.04871,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -195,8 +242,8 @@
       "key": "9",
       "attributes": {
         "label": "VIII",
-        "x": -34.557205,
-        "y": -56.633118,
+        "x": -35.049614,
+        "y": -26.596024,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -205,8 +252,8 @@
       "key": "10",
       "attributes": {
         "label": "IX",
-        "x": 127.58499,
-        "y": -187.9911,
+        "x": 233.74808,
+        "y": -151.24728,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -215,8 +262,8 @@
       "key": "11",
       "attributes": {
         "label": "X",
-        "x": -35.11963,
-        "y": -23.585266,
+        "x": -37.08927,
+        "y": 24.671036,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -225,8 +272,8 @@
       "key": "12",
       "attributes": {
         "label": "XI",
-        "x": -32.812134,
-        "y": -273.95108,
+        "x": -130.80196,
+        "y": -307.43506,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -235,8 +282,8 @@
       "key": "13",
       "attributes": {
         "label": "XII",
-        "x": -23.956446,
-        "y": -160.60223,
+        "x": -63.841755,
+        "y": -159.125,
         "size": 10.0,
         "color": "#389fd6"
       }
@@ -245,8 +292,8 @@
       "key": "14",
       "attributes": {
         "label": "XIII",
-        "x": 127.10586,
-        "y": -146.48193,
+        "x": 210.81578,
+        "y": -116.937256,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -255,8 +302,8 @@
       "key": "15",
       "attributes": {
         "label": "XIV",
-        "x": 8.341257,
-        "y": -159.26108,
+        "x": -5.6727962,
+        "y": -160.72856,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -265,8 +312,8 @@
       "key": "16",
       "attributes": {
         "label": "XV",
-        "x": 173.6445,
-        "y": -110.979904,
+        "x": 224.85526,
+        "y": -25.792747,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -275,8 +322,8 @@
       "key": "17",
       "attributes": {
         "label": "XVI",
-        "x": -203.27173,
-        "y": -221.63702,
+        "x": -131.8721,
+        "y": -208.34193,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -285,8 +332,8 @@
       "key": "18",
       "attributes": {
         "label": "XVII",
-        "x": -114.689606,
-        "y": -252.23065,
+        "x": -131.4316,
+        "y": -277.836,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -295,8 +342,8 @@
       "key": "19",
       "attributes": {
         "label": "XVIII",
-        "x": -92.17383,
-        "y": -25.135162,
+        "x": -104.97652,
+        "y": 22.628738,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -305,8 +352,8 @@
       "key": "20",
       "attributes": {
         "label": "XIX",
-        "x": 90.33637,
-        "y": -108.85134,
+        "x": 88.36672,
+        "y": -46.315117,
         "size": 10.0,
         "color": "#6769e3"
       }
@@ -315,8 +362,8 @@
       "key": "21",
       "attributes": {
         "label": "HDA",
-        "x": -59.805603,
-        "y": -137.59023,
+        "x": -124.10359,
+        "y": -130.4689,
         "size": 10.0,
         "color": "#ccffcc"
       }
@@ -325,8 +372,8 @@
       "key": "22",
       "attributes": {
         "label": "LDA",
-        "x": -118.03636,
-        "y": -137.95764,
+        "x": -182.5656,
+        "y": -132.5478,
         "size": 10.0,
         "color": "#ccffcc"
       }
@@ -335,8 +382,8 @@
       "key": "23",
       "attributes": {
         "label": "C0",
-        "x": -159.84796,
-        "y": -252.94858,
+        "x": -182.99127,
+        "y": -278.06152,
         "size": 10.0,
         "color": "#ffc800"
       }
@@ -345,8 +392,8 @@
       "key": "24",
       "attributes": {
         "label": "C2",
-        "x": -126.33855,
-        "y": -227.07518,
+        "x": -182.96584,
+        "y": -239.38545,
         "size": 10.0,
         "color": "#ffc800"
       }
@@ -355,8 +402,8 @@
       "key": "25",
       "attributes": {
         "label": "sII",
-        "x": -203.5957,
-        "y": -261.10107,
+        "x": -183.40681,
+        "y": -207.42825,
         "size": 10.0,
         "color": "#ffc800"
       }
@@ -370,7 +417,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[3]",
+        "REF": "[3, 17]",
         "reference": "null",
         "source name": "Ih",
         "target name": "XI"
@@ -448,7 +495,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[3]",
+        "REF": "[3, 17]",
         "reference": "null",
         "source name": "XI",
         "target name": "Ih"
@@ -474,7 +521,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[20]",
         "reference": "null",
         "source name": "Ic",
         "target name": "Ih"
@@ -604,7 +651,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[5]",
+        "REF": "[5, 21]",
         "reference": "null",
         "source name": "HDA",
         "target name": "V"
@@ -669,7 +716,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[5]",
+        "REF": "[5, 21]",
         "reference": "null",
         "source name": "HDA",
         "target name": "VI"
@@ -721,7 +768,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[18]",
         "reference": "null",
         "source name": "VIII",
         "target name": "X"
@@ -812,7 +859,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[5]",
+        "REF": "[5, 21]",
         "reference": "null",
         "source name": "HDA",
         "target name": "XII"
@@ -825,7 +872,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "[5]",
+        "REF": "[5, 21]",
         "reference": "null",
         "source name": "HDA",
         "target name": "IV"
@@ -877,7 +924,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[20]",
         "reference": "null",
         "source name": "XVII",
         "target name": "Ic"
@@ -890,7 +937,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[1]",
         "reference": "null",
         "source name": "C0",
         "target name": "XVII"
@@ -903,7 +950,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[19]",
         "reference": "null",
         "source name": "C2",
         "target name": "Ic"
@@ -916,7 +963,7 @@
       "attributes": {
         "color": "#cccccc",
         "weight": 1.0,
-        "REF": "null",
+        "REF": "[22]",
         "reference": "null",
         "source name": "sII",
         "target name": "XVI"
@@ -1051,8 +1098,48 @@
         "source name": "VIII",
         "target name": "VII"
       }
+    },
+    {
+      "key": "63",
+      "source": "21",
+      "target": "10",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[21]",
+        "reference": "null",
+        "source name": "HDA",
+        "target name": "IX"
+      }
+    },
+    {
+      "key": "62",
+      "source": "21",
+      "target": "0",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[21]",
+        "reference": "null",
+        "source name": "HDA",
+        "target name": "Ih"
+      }
+    },
+    {
+      "key": "64",
+      "source": "17",
+      "target": "2",
+      "attributes": {
+        "color": "#cccccc",
+        "weight": 1.0,
+        "REF": "[22]",
+        "reference": "null",
+        "source name": "XVI",
+        "target name": "Isd"
+      }
     }
-  ]         };
+  ]
+        };
 
         // --- Data Preprocessing ---
         const nodes = graphData.nodes;
@@ -1191,10 +1278,17 @@
 
         // Attach click handler to SVG background to reset
         svg.on("click", function(event) {
-            if (event.target === this) resetHighlight();
+            // Check if the click target is the SVG itself (and not a child like a node)
+            // In some cases, event.target might be the <svg> or the <g> depending on zoom/pan.
+            // A safer check might involve ensuring the click wasn't on a node group element.
+            // However, since handleNodeClick uses stopPropagation, this simpler check often works.
+            if (event.target === this || event.target === mainG.node()) {
+                 resetHighlight();
+            }
         });
 
-        // Optional Initial View Calculation...
+        // Optional Initial View Calculation... (You might want to adjust this if you implement it,
+        // considering the new svgHeight)
         // function calculateInitialView() { ... }
         // calculateInitialView();
 

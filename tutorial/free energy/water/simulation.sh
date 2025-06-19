@@ -385,19 +385,9 @@ Water model: ${water_model}"
 EOF
     cat<<'EOF' >eq.sh
 #!/bin/bash
-#SBATCH -n 16
-#SBATCH -J equilibration
 #SBATCH -N 1
-#SBATCH -p NVIDIAGeForceRTX3090
-#SBATCH --gres=gpu:1
-#SBATCH -e error.err1
-#SBATCH -o output.out1
 
-module purge
-module load compiler/gcc/7.3.1
-module load compiler/intel/2021.3.0
-module load mpi/intelmpi/2021.3.0
-module load mathlib/fftw/intelmpi/3.3.9_single
+
 module load apps/gromacs/2023.4-30
 
 T=
@@ -613,19 +603,10 @@ EOF
             gmx grompp -f mdp/md.mdp -c ${Temperature[${i}]}_${Pressure[${i}]}/$f/em/em.gro -p ${Temperature[${i}]}_${Pressure[${i}]}/$f/${top}.top -o ${Temperature[${i}]}_${Pressure[${i}]}/$f/md/md
             cat<<'EOF' >md.sh
 #!/bin/bash
-#SBATCH -n 16
-#SBATCH -J nvt
 #SBATCH -N 1
-#SBATCH -p NVIDIAGeForceRTX3090
-#SBATCH --gres=gpu:1
-#SBATCH -e error.err1
-#SBATCH -o output.out1
+
 
 module purge
-module load compiler/gcc/7.3.1
-module load compiler/intel/2021.3.0
-module load mpi/intelmpi/2021.3.0
-module load mathlib/fftw/intelmpi/3.3.9_single
 module load apps/gromacs/2023.4-30
 
 T=

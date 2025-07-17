@@ -34,6 +34,13 @@ ffmpeg -r 24 -start_number 0 -i pic.%05d.jpg -vframes 401 -crf 22 -c:v libx264 -
 
 -start_number 0 和 -vframes 401 控制了图片的范围，从0到400号用于视频合成
 
+# ffmpeg中增加字幕
+ffmpeg -r 24 -i noH.%05d.ppm -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2, drawtext=text='Time %{eif\:floor((n)/10)\:d}.%{eif\:mod(n\,10)\:d} ps': x=w-tw-10: y=h-th-10: fontsize=24: fontcolor=black" -c:v libx264 -pix_fmt yuv420p output.mp4
+
+# ffmpeg将两个视频横向拼接
+ffmpeg -i C2.mp4 -i output.mp4 -filter_complex "[0:v][1:v]hstack=inputs=2[v]" -map "[v]" -c:v libx264 combined.mp4
+
+
 # 几何变换
 ```tcl
 set sel [atomselect top all]

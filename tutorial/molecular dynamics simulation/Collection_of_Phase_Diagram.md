@@ -31,9 +31,10 @@ supercooled water, spinodal line, liquid-liquid critical point, $C_p$, $k_T$ max
 
 
 experiment:
-stable ice[^1][^7][^9][^17] [^24]
+stable ice[^1][^7][^9][^17][^24][^29]
 stable and metastable ice[^5][^19]
 supercooled water, spinodal line, liquid-liquid critical point[^20][^21][^22]
+VII to FCC[^28]
 
 Different liquid:
 [^6][^12]
@@ -75,3 +76,5 @@ Constraints on the location of the liquid–liquid critical point in water
 [^25]:Determining the phase diagram of water from direct coexistence simulations: The phase diagram of the TIP4P/2005 model revisited
 [^26]:Can simple models describe the phase diagram of water?
 [^27]:A potential model for the study of ices and amorphous water: TIP4P/Ice
+[^28]:Structure and properties of two superionic ice phases
+[^29]:Neutrons meet ice polymorphs

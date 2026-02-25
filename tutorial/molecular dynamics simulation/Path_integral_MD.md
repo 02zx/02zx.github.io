@@ -38,7 +38,7 @@ run             ${NSTEPS}
 
 ## Input for i-Pi
 ---input.xml---
-```bash
+```xml
 <simulation verbosity='high'>
 
   <output prefix='sim'>

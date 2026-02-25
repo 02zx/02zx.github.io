@@ -132,8 +132,8 @@ for nlmp in `seq 8 15`; do
     export CUDA_VISIBLE_DEVICES=1
     lmp -in npt.in &> log-lmp/log.lmp.$nlmp &
 done
-```
+
 wait
 
 # ======= ipi job done =======
-
+```

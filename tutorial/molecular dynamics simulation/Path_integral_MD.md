@@ -1,6 +1,7 @@
 
 ## Input for lammps
 ---input.in---
+```bash
 clear
 # --------------------- VARIABLES-------------------------
 variable        NSTEPS          equal 1000000000        #not important
@@ -33,10 +34,11 @@ fix             1 all ipi VARADDRESS 32345 unix
 # --------------------- RUN ------------------------------
 run             ${NSTEPS}
 #write_data      npt.data
-
+```
 
 ## Input for i-Pi
 ---input.xml---
+```bash
 <simulation verbosity='high'>
 
   <output prefix='sim'>
@@ -92,10 +94,11 @@ run             ${NSTEPS}
   </system>
 
 </simulation>
-
+```
 
 ## script for simulation
 ---run.sh---
+```bash
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
@@ -129,7 +132,7 @@ for nlmp in `seq 8 15`; do
     export CUDA_VISIBLE_DEVICES=1
     lmp -in npt.in &> log-lmp/log.lmp.$nlmp &
 done
-
+```
 wait
 
 # ======= ipi job done =======

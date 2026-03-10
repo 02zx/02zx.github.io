@@ -3,13 +3,16 @@ TIP4P:
 stable ice[^9][^13][^26]
 
 TIP4P/2005:
-Ih-VII[^1][^9][^25]
+Ih-VII[^1][^9][^25][^30]
 VII,metastable phase[^2][^16]
 supercooled water, spinodal line, critical point[^15]
 negative pressure ice[^8][^10]
 
+TIP4PQ/2005:
+Ih-VII[^30]
+
 TIP4P/Ice:
-stable ice[^18][^26][^27]
+stable ice[^18][^26][^27][^30]
 supercooled water[^23]
 
 
@@ -47,7 +50,7 @@ ReaXFF:
 
 ML water:
 Constraints on the location of the liquid–liquid critical point in water
-
+MB-pol, DNN@MB-pol[^30]
 ## References:
 [^1]:The phase diagram of water at high pressures as obtained by computer simulations of the TIP4P/2005 model: the appearance of a plastic crystal phase. Phys. Chem. Chem. Phys., 2009, 11, 543–555
 [^2]:Phase Diagrams of TIP4P/2005, SPC/E, and TIP5P Water at High Pressure. J.Phys.Chem.B 2018, 122, 7718−7725.
@@ -78,3 +81,4 @@ Constraints on the location of the liquid–liquid critical point in water
 [^27]:A potential model for the study of ices and amorphous water: TIP4P/Ice
 [^28]:Structure and properties of two superionic ice phases
 [^29]:Neutrons meet ice polymorphs
+[^30]:Realistic phase diagram of water from “first principles” data-driven quantum simulations

@@ -2,7 +2,18 @@ NepTrain
 ```bash
 NepTrain train job.yaml
 ```
+the directory contains:
+cache/  dpdispatcher.log  INCAR  job.yaml  restart.yaml  structure/  train.xyz
 
+structure directory contains the initial configuration for MD sampling.
+
+cache contains the output of active learning
+
+Initial train.xyz is the training set
+
+INCAR is the input of VASP calculation.
+
+job.yaml
 ```yaml
 version: 2.2.0
 dft_job: 10 #The number of tasks submitted when calculating single-point energy with DFT.

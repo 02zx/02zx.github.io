@@ -1,5 +1,10 @@
 NepTrain
 ```bash
+NepTrain perturb train.xyz -n 20000 -c 0.03 -d 0.2 #generating pertubation data
+NepTrain select perturb.xyz -max 100 -d 1 #far point sampling
+```
+
+```bash
 NepTrain train job.yaml
 ```
 the directory contains:

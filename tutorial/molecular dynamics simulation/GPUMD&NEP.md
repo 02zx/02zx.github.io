@@ -1,4 +1,32 @@
 NepTrain
+
+.NepTrain
+```bash
+[environ]
+# 赝势文件的路径
+potcar_path =/public/home/data_XZ/NH4F/MLP/scan/train/pseudo/POTCAR
+#vasp的执行路径
+vasp_path =/public/software/apps/vasp/6.2.1-icc21-cuda11.6/bin/vasp_std
+
+#mpirun的执行路径
+mpirun_path = mpirun
+#nep执行路径
+nep_path=/public/home/data_XZ/GPUMD/GPUMD-4.7/src/nep
+
+#gpumd执行路径
+gpumd_path=/public/home/data_XZ/GPUMD/GPUMD-4.7/src/gpumd
+
+[radius]
+
+
+[potcar]
+#可以自己设置赝势文件的版本
+#如果不设置 将采用VASP官网推荐的赝势文件版本
+H=H
+N=N
+F=F
+```
+
 ```bash
 NepTrain perturb train.xyz -n 20000 -c 0.03 -d 0.2 #generating pertubation data
 NepTrain select perturb.xyz -max 100 -d 0.1 #far point sampling

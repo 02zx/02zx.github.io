@@ -1,5 +1,6 @@
 
 ```python
+##input.py
 from openmm.app import *
 from openmm import *
 from openmm.unit import *
@@ -31,6 +32,22 @@ simulation.reporters.append(StateDataReporter(stdout, 1000, step=True,
 
 simulation.step(1000000)
 simulation.saveCheckpoint('state.chk')
+```
 
+```sh
+#!/bin/bash
+#SBATCH -n 1
+#SBATCH -J openmm
+#SBATCH -N 1
+#SBATCH -p NVIDIAGeForceRTX3090
+#SBATCH --gres=gpu:1
+#SBATCH -e error.err1
+#SBATCH -o output.out1
+
+
+#/public/software/apps/openmm/8.1.1/lib/python3.12/site-packages/openmm/openmm.py
+module add apps/openmm/8.1.1
+#python3 -m openmm.testInstallation
+python3 input.py
 
 ```

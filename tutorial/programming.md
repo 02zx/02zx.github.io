@@ -7,9 +7,7 @@
 # 如何使用mobaXterm登录pkuhpc
  ssh/sftp设置:
 
- 
  remote host: 10.100.1.88 username: xxx_zx
-
  
  密码: 静态密码 动态密码 以静态密码+空格+动态密码的形式一并输入
 

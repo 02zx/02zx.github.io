@@ -4,6 +4,11 @@
    ssh -N -f -L localhost:8888:localhost:8888 username@IP
 3. 使用本地浏览器打开远程服务器上jupyter-notebook的链接即可
 
+# 如何使用mobaXterm登录pkuhpc
+ ssh/sftp设置:
+ remote host: 10.100.1.88 username: xxx_zx
+ 密码: 静态密码 动态密码 以静态密码+空格+动态密码的形式一并输入
+
 
 
 # GROMACS编译
